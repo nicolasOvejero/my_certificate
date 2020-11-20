@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import 'certificate.dart';
+
 class Utils {
   static Color hexToColor(String code) {
     return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
@@ -25,5 +27,28 @@ class Utils {
       );
     });
     return MaterialColor(color.value, swatch);
+  }
+
+  static String mapMovementTypeToFrench(MovementType type) {
+    switch (type) {
+      case MovementType.work:
+        return "travail";
+      case MovementType.shopping:
+        return "achats";
+      case MovementType.medical:
+        return "sante";
+      case MovementType.family:
+        return "famille";
+      case MovementType.handicap:
+        return "handicap";
+      case MovementType.sport:
+        return "sport_animaux";
+      case MovementType.administrative:
+        return "convocation";
+      case MovementType.general_interest:
+        return "missions";
+      case MovementType.school:
+        return "enfants";
+    }
   }
 }

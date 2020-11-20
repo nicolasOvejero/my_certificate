@@ -56,6 +56,8 @@ class _MyHomePageState extends State<MyHomePage> {
     values.address.zipCode = "69100";
     values.address.street = "106 Boulevard du 11 Novembre 1918";
     values.type = MovementType.work;
+    values.creationDate = "20/11/2020";
+    values.creationTime = "20:20";
 
     final pdf = PdfGeneration.generatePdf(values);
 

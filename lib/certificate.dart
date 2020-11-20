@@ -23,4 +23,6 @@ class Certificate {
   String birthplace;
   Address address;
   MovementType type;
+  String creationDate;
+  String creationTime;
 }
