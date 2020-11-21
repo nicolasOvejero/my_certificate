@@ -1,88 +1,52 @@
-import 'dart:io';
-
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart';
 import 'package:my_certificate/certificate.dart';
-import 'package:my_certificate/pdf_generation.dart';
 import 'package:my_certificate/utils.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
 
-class CertificateForm extends StatefulWidget {
+class UserForm extends StatefulWidget {
   Certificate certificate = new Certificate();
 
-  CertificateForm(this.certificate);
+  UserForm(this.certificate);
 
   @override
-  CertificateFormState createState() => CertificateFormState();
+  UserFormState createState() => UserFormState();
 }
 
-class CertificateFormState extends State<CertificateForm> {
-  final _informationformKey = GlobalKey<FormState>();
-  final format = DateFormat("dd-MM-yyyy");
-  final hourFormat = DateFormat("HH:mm");
+class UserFormState extends State<UserForm> {
+  final _informationFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return new Column(children: <Widget>[
       Container(
-          alignment: Alignment.topLeft,
-          padding: EdgeInsets.only(bottom: 8),
-          child: Text(
-            "Informations générales",
-            style: TextStyle(
-                color: Utils.hexToColor("#e1000f"),
-                fontWeight: FontWeight.w700,
-                fontSize: 24),
-          )),
-      Divider(thickness: 2),
-      Container(padding: EdgeInsets.only(bottom: 8), child: buildGeneralForm()),
-      Container(
-        padding: EdgeInsets.only(bottom: 16),
-        child: SizedBox(
-          width: double.infinity,
-          child: RaisedButton(
-            textColor: Colors.white,
-            color: Theme
-                .of(context)
-                .accentColor,
-            padding: EdgeInsets.only(top: 16, bottom: 16),
-            child: Text('Enregistrer', style: TextStyle(fontSize: 18)),
-            onPressed: () {
-              if (_informationformKey.currentState.validate()) {
-                _informationformKey.currentState.save();
-                Scaffold.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("Information enregister"),
-                      backgroundColor: Colors.green,
-                    )
-                );
-                // createPDF(widget.certificate);
-              }
-            },
-          ),
+          padding: EdgeInsets.only(top: 16, right: 16, left: 16),
+          child: buildGeneralForm()),
+      SizedBox(
+        width: double.infinity,
+        child: RaisedButton(
+          textColor: Colors.white,
+          color: Theme.of(context).accentColor,
+          padding: EdgeInsets.only(top: 16, bottom: 16),
+          child: Text('Enregistrer', style: TextStyle(fontSize: 18)),
+          onPressed: () {
+            if (_informationFormKey.currentState.validate()) {
+              _informationFormKey.currentState.save();
+              Scaffold.of(context).showSnackBar(SnackBar(
+                content: Text("Information enregistées"),
+                backgroundColor: Colors.green,
+              ));
+            }
+          },
         ),
       ),
-      Container(
-          alignment: Alignment.topLeft,
-          padding: EdgeInsets.only(bottom: 8),
-          child: Text(
-            "Motif du déplacement",
-            style: TextStyle(
-                color: Utils.hexToColor("#e1000f"),
-                fontWeight: FontWeight.w700,
-                fontSize: 24),
-          )),
-      Divider(thickness: 2),
     ]);
   }
 
   Widget buildGeneralForm() {
     return Form(
-        key: _informationformKey,
-        autovalidate: true,
+        key: _informationFormKey,
+        autovalidateMode: AutovalidateMode.always,
         child: Column(children: <Widget>[
           Padding(
             padding: const EdgeInsetsDirectional.only(bottom: 16),
@@ -96,7 +60,7 @@ class CertificateFormState extends State<CertificateForm> {
                 labelText: 'Nom',
               ),
               validator: (value) =>
-              value.isEmpty ? 'Ce champ doit être rempli' : null,
+                  value.isEmpty ? 'Ce champ doit être rempli' : null,
               onSaved: (String value) {
                 widget.certificate.lastname = value;
               },
@@ -114,7 +78,7 @@ class CertificateFormState extends State<CertificateForm> {
                 labelText: 'Prénom',
               ),
               validator: (value) =>
-              value.isEmpty ? 'Ce champ doit être rempli' : null,
+                  value.isEmpty ? 'Ce champ doit être rempli' : null,
               onSaved: (String value) {
                 widget.certificate.firstname = value;
               },
@@ -124,7 +88,7 @@ class CertificateFormState extends State<CertificateForm> {
             padding: const EdgeInsetsDirectional.only(bottom: 16),
             child: DateTimeField(
               initialValue: widget.certificate.birthdate,
-              format: format,
+              format: Utils.dateFormat,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.calendar_today),
                 border: OutlineInputBorder(
@@ -140,7 +104,7 @@ class CertificateFormState extends State<CertificateForm> {
                     lastDate: DateTime.now());
               },
               validator: (DateTime value) =>
-              value == null ? 'Ce champ doit être rempli' : null,
+                  value == null ? 'Ce champ doit être rempli' : null,
               onSaved: (DateTime value) {
                 widget.certificate.birthdate = value;
               },
@@ -158,7 +122,7 @@ class CertificateFormState extends State<CertificateForm> {
                 labelText: 'Lieux de naissance',
               ),
               validator: (value) =>
-              value.isEmpty ? 'Ce champ doit être rempli' : null,
+                  value.isEmpty ? 'Ce champ doit être rempli' : null,
               onSaved: (String value) {
                 widget.certificate.birthplace = value;
               },
@@ -176,7 +140,7 @@ class CertificateFormState extends State<CertificateForm> {
                 labelText: 'Adresse',
               ),
               validator: (value) =>
-              value.isEmpty ? 'Ce champ doit être rempli' : null,
+                  value.isEmpty ? 'Ce champ doit être rempli' : null,
               onSaved: (String value) {
                 widget.certificate.address.street = value;
               },
@@ -194,7 +158,7 @@ class CertificateFormState extends State<CertificateForm> {
                 labelText: 'Ville',
               ),
               validator: (value) =>
-              value.isEmpty ? 'Ce champ doit être rempli' : null,
+                  value.isEmpty ? 'Ce champ doit être rempli' : null,
               onSaved: (String value) {
                 widget.certificate.address.city = value;
               },
@@ -213,7 +177,7 @@ class CertificateFormState extends State<CertificateForm> {
                 labelText: 'Code postal',
               ),
               validator: (value) =>
-              value.isEmpty ? 'Ce champ doit être rempli' : null,
+                  value.isEmpty ? 'Ce champ doit être rempli' : null,
               onSaved: (String value) {
                 widget.certificate.address.zipCode = value;
               },
@@ -223,7 +187,7 @@ class CertificateFormState extends State<CertificateForm> {
             padding: const EdgeInsetsDirectional.only(bottom: 16),
             child: DateTimeField(
               initialValue: widget.certificate.creationDateTime,
-              format: format,
+              format: Utils.dateFormat,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.access_time),
                 border: OutlineInputBorder(
@@ -235,12 +199,12 @@ class CertificateFormState extends State<CertificateForm> {
                 return showDatePicker(
                     context: context,
                     firstDate: DateTime.now(),
-                    initialDate: widget.certificate.creationDateTime ??
-                        DateTime.now(),
+                    initialDate:
+                        widget.certificate.creationDateTime ?? DateTime.now(),
                     lastDate: DateTime.now());
               },
               validator: (DateTime value) =>
-              value == null ? 'Ce champ doit être rempli' : null,
+                  value == null ? 'Ce champ doit être rempli' : null,
               onSaved: (DateTime value) {
                 widget.certificate.creationDateTime = value;
               },
@@ -250,7 +214,7 @@ class CertificateFormState extends State<CertificateForm> {
             padding: const EdgeInsetsDirectional.only(bottom: 16),
             child: DateTimeField(
               initialValue: widget.certificate.creationDateTime,
-              format: hourFormat,
+              format: Utils.hourFormat,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.access_time),
                 border: OutlineInputBorder(
@@ -267,22 +231,12 @@ class CertificateFormState extends State<CertificateForm> {
                 return DateTimeField.convert(time);
               },
               validator: (DateTime value) =>
-              value == null ? 'Ce champ doit être rempli' : null,
+                  value == null ? 'Ce champ doit être rempli' : null,
               onSaved: (DateTime value) {
                 widget.certificate.creationDateTime = value;
               },
             ),
           ),
         ]));
-  }
-
-  Future<void> createPDF(Certificate values) async {
-    final pdf = PdfGeneration.generatePdf(values);
-
-    final output = await getExternalStorageDirectory();
-    final file = File("${output.path}/example.pdf");
-    await file.writeAsBytes(pdf.save());
-
-    OpenFile.open(file.path);
   }
 }
