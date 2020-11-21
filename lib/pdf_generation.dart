@@ -1,10 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:my_certificate/utils.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:intl/intl.dart';
 
 import 'certificate.dart';
 
 class PdfGeneration {
+  static final dateFormat = DateFormat("dd-MM-yyyy");
+  static final hourFormat = DateFormat("HH:mm");
+
   static pw.Document generatePdf(Certificate values) {
     final pdf = pw.Document();
 
@@ -103,7 +108,7 @@ class PdfGeneration {
           pw.Container(
             padding: const pw.EdgeInsets.only(right: 4),
             child: pw.Text(
-              values.birthdate,
+              dateFormat.format(values.birthdate),
               style: pw.TextStyle(
                 fontSize: 12,
               ),
@@ -521,7 +526,7 @@ class PdfGeneration {
                       pw.Container(
                         padding: const pw.EdgeInsets.only(right: 16),
                         child: pw.Text(
-                          values.creationDate,
+                          dateFormat.format(values.creationDateTime),
                           style: pw.TextStyle(
                             fontSize: 12,
                           ),
@@ -537,7 +542,7 @@ class PdfGeneration {
                         ),
                       ),
                       pw.Text(
-                        values.creationTime,
+                        hourFormat.format(values.creationDateTime),
                         style: pw.TextStyle(
                           fontSize: 12,
                         ),
@@ -584,13 +589,13 @@ class PdfGeneration {
 
   static pw.BarcodeWidget generateQrcode(Certificate values, { double height = 90, double width = 90 }) {
     return pw.BarcodeWidget(
-      data: 'Cree le : ${values.creationDate} a ${values.creationTime};\n'
+      width: width,
+      data: 'Cree le : ${dateFormat.format(values.creationDateTime)} a ${hourFormat.format(values.creationDateTime)};\n'
           'Nom: ${values.lastname};\n'
           'Prenom: ${values.firstname};\n'
-          'Naissance: ${values.birthdate} a ${values.birthplace};\n'
-          'Sortie: ${values.creationDate} a ${values.creationTime};\n'
+          'Naissance: ${dateFormat.format(values.birthdate)} a ${values.birthplace};\n'
+          'Sortie: ${dateFormat.format(values.creationDateTime)} a ${hourFormat.format(values.creationDateTime)};\n'
           'Motifs: ${Utils.mapMovementTypeToFrench(values.type)};',
-      width: width,
       height: height,
       barcode: pw.Barcode.qrCode(),
     );

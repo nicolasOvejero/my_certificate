@@ -19,10 +19,9 @@ class Address {
 class Certificate {
   String firstname;
   String lastname;
-  String birthdate;
+  DateTime birthdate;
   String birthplace;
   Address address;
   MovementType type;
-  String creationDate;
-  String creationTime;
+  DateTime creationDateTime;
 }
