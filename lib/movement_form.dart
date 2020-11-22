@@ -1,9 +1,8 @@
+import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:my_certificate/certificate.dart';
-import 'package:my_certificate/pdf_generation.dart';
 import 'package:my_certificate/storage_service.dart';
-import 'package:async/async.dart';
 
 class MovementForm extends StatefulWidget {
   MovementForm();
@@ -197,7 +196,6 @@ class MovementFormState extends State<MovementForm> {
           onPressed: () async {
             certificate.creationDateTime = DateTime.now();
             await StorageService.storeCertificate(certificate);
-            await PdfGeneration.createPDF(certificate);
             Scaffold.of(context).showSnackBar(SnackBar(
               content: Text("Attestation générée"),
               backgroundColor: Colors.green,

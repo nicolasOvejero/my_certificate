@@ -61,7 +61,7 @@ class PdfGeneration {
         child: pw.Text(
             "En application du décret n°2020-1310 du 29 octobre 2020 prescrivant"
             " les mesures générales nécessaires pour faire face à l'épidémie de covid-19"
-            " 0dans le cadre de l'état d'urgence sanitaire",
+            " dans le cadre de l'état d'urgence sanitaire",
             style: pw.TextStyle(
               fontStyle: pw.FontStyle.italic,
               fontSize: 15,
@@ -216,10 +216,7 @@ class PdfGeneration {
             pw.Container(
               padding: const pw.EdgeInsets.only(bottom: 4),
               child: pw.Text(
-                  "1. Déplacements entre le domicile et le lieu d'exercice "
-                  "de l'activité professionnelle ou un établissement d'enseignement ou "
-                  "de formation, déplacements professionnels ne pouvant être différés, "
-                  "déplacements pour un concours ou un examen.",
+                  '1. ${Utils.mapMovementTypeToFrenchText(MovementType.work)}',
                   style: pw.TextStyle(
                     fontSize: 11,
                   )),
@@ -258,11 +255,7 @@ class PdfGeneration {
             pw.Container(
               padding: const pw.EdgeInsets.only(bottom: 4),
               child: pw.Text(
-                  "2. Déplacements pour effectuer des achats de "
-                  "fournitures nécessaires à l'activité professionnelle, "
-                  "des achats de première nécessité dans des établissements "
-                  "dont les activités demeurent autorisées, le retrait de "
-                  "commande et les livraisons à domicile.",
+                  '2. ${Utils.mapMovementTypeToFrenchText(MovementType.shopping)}',
                   style: pw.TextStyle(
                     fontSize: 11,
                   )),
@@ -299,8 +292,7 @@ class PdfGeneration {
               child: value == MovementType.medical ? pw.Text("X") : null),
           pw.Flexible(
             child: pw.Text(
-                "3. Consultations, examens et soins ne pouvant être "
-                "assurés à distance et l'achat de médicaments.",
+                '3. ${Utils.mapMovementTypeToFrenchText(MovementType.medical)}',
                 style: pw.TextStyle(
                   fontSize: 11,
                 )),
@@ -328,8 +320,7 @@ class PdfGeneration {
               child: value == MovementType.family ? pw.Text("X") : null),
           pw.Flexible(
             child: pw.Text(
-                "4. Déplacements pour motif familial impérieux, pour "
-                "l'assistance aux personnes vulnérables et précaires ou la garde d'enfants.",
+                '4. ${Utils.mapMovementTypeToFrenchText(MovementType.family)}',
                 style: pw.TextStyle(
                   fontSize: 11,
                 )),
@@ -357,8 +348,7 @@ class PdfGeneration {
               child: value == MovementType.handicap ? pw.Text("X") : null),
           pw.Flexible(
             child: pw.Text(
-                "5. Déplacement des personnes en situation "
-                "de handicap et leur accompagnant.",
+                '5. ${Utils.mapMovementTypeToFrenchText(MovementType.handicap)}',
                 style: pw.TextStyle(
                   fontSize: 11,
                 )),
@@ -386,12 +376,7 @@ class PdfGeneration {
               child: value == MovementType.sport ? pw.Text("X") : null),
           pw.Flexible(
             child: pw.Text(
-                "6. Déplacements brefs, dans la limite d'une heure quotidienne et dans "
-                "un rayon maximal d'un kilomètre autour du domicile, liés soit à l'activité "
-                "physique individuelle des personnes, à l'exclusion de toute pratique "
-                "sportive collective et de toute proximité avec d'autres personnes, soit à la "
-                "promenade avec les seules personnes regroupées dans un même domicile, "
-                "soit aux besoins des animaux de compagnie.",
+                '6. ${Utils.mapMovementTypeToFrenchText(MovementType.sport)}',
                 style: pw.TextStyle(
                   fontSize: 11,
                 )),
@@ -420,8 +405,7 @@ class PdfGeneration {
                   value == MovementType.administrative ? pw.Text("X") : null),
           pw.Flexible(
             child: pw.Text(
-                "7. Convocation judiciaire ou administrative et"
-                " pour se rendre dans un service public.",
+                '7. ${Utils.mapMovementTypeToFrenchText(MovementType.administrative)}',
                 style: pw.TextStyle(
                   fontSize: 11,
                 )),
@@ -450,8 +434,7 @@ class PdfGeneration {
                   value == MovementType.general_interest ? pw.Text("X") : null),
           pw.Flexible(
             child: pw.Text(
-                "8. Participation à des missions d'intérêt général"
-                " sur demande de l'autorité administrative.",
+                '8. ${Utils.mapMovementTypeToFrenchText(MovementType.general_interest)}',
                 style: pw.TextStyle(
                   fontSize: 11,
                 )),
@@ -479,8 +462,7 @@ class PdfGeneration {
               child: value == MovementType.school ? pw.Text("X") : null),
           pw.Flexible(
             child: pw.Text(
-                "9. Déplacement pour chercher les enfants à "
-                "l'école et à l'occasion de leurs activités périscolaires.",
+                '9. ${Utils.mapMovementTypeToFrenchText(MovementType.school)}',
                 style: pw.TextStyle(
                   fontSize: 11,
                 )),
@@ -581,7 +563,7 @@ class PdfGeneration {
                       ),
                     ),
                     pw.Text(
-                      '${values.lastname.toUpperCase()} ${values.lastname}',
+                      '${values.lastname.toUpperCase()} ${values.firstname}',
                       style: pw.TextStyle(
                         fontSize: 12,
                       ),
@@ -599,14 +581,18 @@ class PdfGeneration {
   static pw.BarcodeWidget generateQrcode(Certificate values, { double height = 90, double width = 90 }) {
     return pw.BarcodeWidget(
       width: width,
-      data: 'Cree le : ${Utils.dateFormat.format(values.creationDateTime)} a ${Utils.hourFormat.format(values.creationDateTime)};\n'
-          'Nom: ${values.lastname};\n'
-          'Prenom: ${values.firstname};\n'
-          'Naissance: ${Utils.dateFormat.format(values.birthdate)} a ${values.birthplace};\n'
-          'Sortie: ${Utils.dateFormat.format(values.creationDateTime)} a ${Utils.hourFormat.format(values.creationDateTime)};\n'
-          'Motifs: ${Utils.mapMovementTypeToFrench(values.type)};',
+      data: generateValuesFormQrcode(values),
       height: height,
       barcode: pw.Barcode.qrCode(),
     );
+  }
+
+  static String generateValuesFormQrcode(Certificate values) {
+    return 'Cree le : ${Utils.dateFormat.format(values.creationDateTime)} a ${Utils.hourFormat.format(values.creationDateTime)};\n'
+        'Nom: ${values.lastname};\n'
+        'Prenom: ${values.firstname};\n'
+        'Naissance: ${Utils.dateFormat.format(values.birthdate)} a ${values.birthplace};\n'
+        'Sortie: ${Utils.dateFormat.format(values.creationDateTime)} a ${Utils.hourFormat.format(values.creationDateTime)};\n'
+        'Motifs: ${Utils.mapMovementTypeToFrench(values.type)};';
   }
 }

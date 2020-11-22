@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_certificate/certificate_view.dart';
 import 'package:my_certificate/movement_form.dart';
 import 'package:my_certificate/user_form.dart';
 import 'package:my_certificate/utils.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'certificate.dart';
 
@@ -73,7 +73,7 @@ class _TabBarController extends State<TabBarController>
         children: [
           SingleChildScrollView(child: UserForm()),
           SingleChildScrollView(child: MovementForm()),
-          Icon(Icons.directions_transit),
+          SingleChildScrollView(child: CertificateView()),
         ],
       ),
     );
