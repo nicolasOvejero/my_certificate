@@ -1,12 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:my_certificate/certificate.dart';
-import 'package:my_certificate/pdf_generation.dart';
 import 'package:my_certificate/tab_bar_controller.dart';
 import 'package:my_certificate/utils.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -37,28 +31,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Future<void> createPDF() async {
-    Certificate values = new Certificate();
-    values.lastname = "Ovejero";
-    values.firstname = "Nicolas";
-    values.birthdate = DateTime(1995, 07, 15);
-    values.birthplace = "Nantua";
-    values.address = new Address();
-    values.address.city = "Villeurbanne";
-    values.address.zipCode = "69100";
-    values.address.street = "106 Boulevard du 11 Novembre 1918";
-    values.type = MovementType.work;
-    values.creationDateTime = DateTime.now();
-
-    final pdf = PdfGeneration.generatePdf(values);
-
-    final output = await getExternalStorageDirectory();
-    final file = File("${output.path}/example.pdf");
-    await file.writeAsBytes(pdf.save());
-
-    OpenFile.open(file.path);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

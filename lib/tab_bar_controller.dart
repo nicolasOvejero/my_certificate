@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_certificate/movement_form.dart';
 import 'package:my_certificate/user_form.dart';
 import 'package:my_certificate/utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'certificate.dart';
 
@@ -42,17 +43,6 @@ class _TabBarController extends State<TabBarController>
 
   @override
   Widget build(BuildContext context) {
-    certificate.lastname = "Ovejero";
-    certificate.firstname = "Nicolas";
-    certificate.birthdate = DateTime(1995, 07, 15);
-    certificate.birthplace = "Nantua";
-    certificate.address = new Address();
-    certificate.address.city = "Villeurbanne";
-    certificate.address.zipCode = "69100";
-    certificate.address.street = "106 Boulevard du 11 Novembre 1918";
-    certificate.type = MovementType.work;
-    certificate.creationDateTime = DateTime.now();
-
     return Scaffold(
       appBar: AppBar(
         bottom: TabBar(
@@ -81,8 +71,8 @@ class _TabBarController extends State<TabBarController>
       body: TabBarView(
         controller: _tabController,
         children: [
-          SingleChildScrollView(child: UserForm(certificate)),
-          SingleChildScrollView(child: MovementForm(certificate)),
+          SingleChildScrollView(child: UserForm()),
+          SingleChildScrollView(child: MovementForm()),
           Icon(Icons.directions_transit),
         ],
       ),
