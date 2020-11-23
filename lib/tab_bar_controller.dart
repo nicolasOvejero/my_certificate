@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_certificate/certificate_view.dart';
 import 'package:my_certificate/movement_form.dart';
+import 'package:my_certificate/storage_service.dart';
 import 'package:my_certificate/user_form.dart';
 import 'package:my_certificate/utils.dart';
 
@@ -17,7 +18,6 @@ class TabBarController extends StatefulWidget {
 
 class _TabBarController extends State<TabBarController>
     with SingleTickerProviderStateMixin {
-  Certificate certificate = new Certificate();
   TabController _tabController;
   int currentTabIndex;
 
@@ -29,12 +29,6 @@ class _TabBarController extends State<TabBarController>
     currentTabIndex = _tabController.index;
   }
 
-  _handleTabSelection() {
-    setState(() {
-      currentTabIndex = _tabController.index;
-    });
-  }
-
   @override
   void dispose() {
     _tabController.dispose();
@@ -44,38 +38,50 @@ class _TabBarController extends State<TabBarController>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        bottom: TabBar(
-          controller: _tabController,
-          indicatorColor: Utils.hexToColor('#e1000f'),
-          tabs: [
-            Tab(
-                text: 'Utilisateur',
-                icon: currentTabIndex == 0
-                    ? Icon(Icons.person_pin_rounded)
-                    : Icon(Icons.person_pin_outlined)),
-            Tab(
-                text: 'Motifs',
-                icon: currentTabIndex == 1
-                    ? Icon(Icons.where_to_vote)
-                    : Icon(Icons.where_to_vote_outlined)),
-            Tab(
-                text: 'Attestations',
-                icon: currentTabIndex == 2
-                    ? Icon(Icons.insert_drive_file)
-                    : Icon(Icons.insert_drive_file_outlined)),
-          ],
-        ),
-        title: Text(widget.title),
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          SingleChildScrollView(child: UserForm()),
-          SingleChildScrollView(child: MovementForm()),
-          SingleChildScrollView(child: CertificateView()),
-        ],
-      ),
-    );
+              appBar: AppBar(
+                bottom: TabBar(
+                  controller: _tabController,
+                  indicatorColor: Utils.hexToColor('#e1000f'),
+                  tabs: [
+                    Tab(
+                        text: 'Utilisateur',
+                        icon: currentTabIndex == 0
+                            ? Icon(Icons.person_pin_rounded)
+                            : Icon(Icons.person_pin_outlined)),
+                    Tab(
+                        text: 'Motifs',
+                        icon: currentTabIndex == 1
+                            ? Icon(Icons.where_to_vote)
+                            : Icon(Icons.where_to_vote_outlined)),
+                    Tab(
+                        text: 'Attestations',
+                        icon: currentTabIndex == 2
+                            ? Icon(Icons.insert_drive_file)
+                            : Icon(Icons.insert_drive_file_outlined)),
+                  ],
+                ),
+                title: Text(widget.title),
+              ),
+              body: TabBarView(
+                controller: _tabController,
+                children: [
+                  SingleChildScrollView(child: UserForm(_checkTabBarPosition)),
+                  SingleChildScrollView(child: MovementForm(_checkTabBarPosition)),
+                  SingleChildScrollView(child: CertificateView(_checkTabBarPosition)),
+                ],
+              ),
+            );
+  }
+
+  _handleTabSelection() {
+    setState(() {
+      currentTabIndex = _tabController.index;
+    });
+  }
+
+  void _checkTabBarPosition(int position) {
+    setState(() {
+      _tabController.index = position;
+    });
   }
 }

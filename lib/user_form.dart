@@ -6,7 +6,9 @@ import 'package:my_certificate/storage_service.dart';
 import 'package:my_certificate/utils.dart';
 
 class UserForm extends StatefulWidget {
-  UserForm();
+  final Function callbackTabBar;
+
+  UserForm(this.callbackTabBar);
 
   @override
   UserFormState createState() => UserFormState();
@@ -42,16 +44,15 @@ class UserFormState extends State<UserForm> {
                     color: Theme.of(context).accentColor,
                     padding: EdgeInsets.only(top: 16, bottom: 16),
                     child: Text('Enregistrer', style: TextStyle(fontSize: 18)),
-                    onPressed: () {
+                    onPressed: () async {
                       if (_informationFormKey.currentState.validate()) {
                         _informationFormKey.currentState.save();
-                        StorageService.storeCertificate(certificate)
-                            .then((value) => {
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    content: Text("Information enregistées"),
-                                    backgroundColor: Colors.green,
-                                  ))
-                                });
+                        widget.callbackTabBar(1);
+                        await StorageService.storeCertificate(certificate);
+                        Scaffold.of(context).showSnackBar(SnackBar(
+                          content: Text("Information enregistées"),
+                          backgroundColor: Colors.green,
+                        ));
                       }
                     },
                   ),

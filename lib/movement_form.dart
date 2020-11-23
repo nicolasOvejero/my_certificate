@@ -5,7 +5,9 @@ import 'package:my_certificate/certificate.dart';
 import 'package:my_certificate/storage_service.dart';
 
 class MovementForm extends StatefulWidget {
-  MovementForm();
+  final Function callbackTabBar;
+
+  MovementForm(this.callbackTabBar);
 
   @override
   MovementFormState createState() => MovementFormState();
@@ -196,6 +198,7 @@ class MovementFormState extends State<MovementForm> {
           onPressed: () async {
             certificate.creationDateTime = DateTime.now();
             await StorageService.storeCertificate(certificate);
+            widget.callbackTabBar(2);
             Scaffold.of(context).showSnackBar(SnackBar(
               content: Text("Attestation générée"),
               backgroundColor: Colors.green,

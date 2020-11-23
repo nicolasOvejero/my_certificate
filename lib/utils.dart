@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'certificate.dart';
 
 class Utils {
-  static final dateFormat = DateFormat("dd-MM-yyyy");
+  static final dateFormat = DateFormat("dd/MM/yyyy");
   static final hourFormat = DateFormat("HH:mm");
 
   static Color hexToColor(String code) {

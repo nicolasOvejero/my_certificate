@@ -24,6 +24,10 @@ class Address {
 
   Map<String, dynamic> toJson() =>
       {'city': city, 'street': street, 'zipCode': zipCode};
+
+  bool isEmpty() {
+    return this.city == null && this.street == null && this.zipCode == null;
+  }
 }
 
 class Certificate {
@@ -57,4 +61,13 @@ class Certificate {
         'type': type.toString(),
         'creationDateTime': creationDateTime.toString(),
       };
+
+  bool isEmpty() {
+    return this.firstname == null && this.lastname == null &&
+        this.birthdate == null && this.birthplace == null && this.address.isEmpty();
+  }
+
+  bool hasMovementType() {
+    return this.type != null;
+  }
 }

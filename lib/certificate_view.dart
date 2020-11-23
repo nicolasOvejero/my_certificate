@@ -8,7 +8,9 @@ import 'package:my_certificate/storage_service.dart';
 import 'package:my_certificate/utils.dart';
 
 class CertificateView extends StatefulWidget {
-  CertificateView();
+  final Function callbackTabBar;
+
+  CertificateView(this.callbackTabBar);
 
   @override
   CertificateViewState createState() => CertificateViewState();
