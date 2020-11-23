@@ -52,6 +52,27 @@ class CertificateViewState extends State<CertificateView> {
         _buildUserInformation(),
         _buildMovementInformation(),
         _buildDateInformation(),
+        Padding(
+          padding: EdgeInsets.only(top: 8),
+          child: SizedBox(
+            width: double.infinity,
+            child: RaisedButton.icon(
+              textColor: Colors.white,
+              color: Theme.of(context).accentColor,
+              onPressed: () async {
+                setState(() {
+                  certificate.creationDateTime = DateTime.now();
+                });
+                await StorageService.storeCertificate(certificate);
+              },
+              icon: Icon(Icons.refresh_outlined, size: 22),
+              label: Text(
+                "Regenerer l'attestation",
+                style: TextStyle(fontSize: 14),
+              ),
+            ),
+          ),
+        ),
       ]),
     );
   }
@@ -300,19 +321,15 @@ class CertificateViewState extends State<CertificateView> {
             children: [
               Padding(
                 padding: EdgeInsets.only(right: 8),
-                child: Icon(
-                    Icons.warning_amber_outlined,
-                    color: Utils.hexToColor('#e1000f'),
-                    size: 24
-                ),
+                child: Icon(Icons.warning_amber_outlined,
+                    color: Utils.hexToColor('#e1000f'), size: 24),
               ),
               Text(
                 "L'heure est dépassée",
                 style: TextStyle(
                     fontSize: 16,
                     color: Utils.hexToColor('#e1000f'),
-                    fontWeight: FontWeight.w500
-                ),
+                    fontWeight: FontWeight.w500),
               ),
             ],
           ),
@@ -342,8 +359,7 @@ class CertificateViewState extends State<CertificateView> {
     final String svg = dm.toSvg(
         PdfGeneration.generateValuesFormQrcode(certificate),
         width: 200,
-        height: 200
-    );
+        height: 200);
 
     showDialog(
         context: context,
