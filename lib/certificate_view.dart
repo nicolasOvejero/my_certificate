@@ -45,7 +45,7 @@ class CertificateViewState extends State<CertificateView> {
         Text(
           "Mon attestation de sortie",
           style: TextStyle(
-              color: Utils.hexToColor('#e1000f'),
+              color: Theme.of(context).accentColor,
               fontSize: 24,
               fontWeight: FontWeight.w900),
         ),
@@ -57,8 +57,6 @@ class CertificateViewState extends State<CertificateView> {
           child: SizedBox(
             width: double.infinity,
             child: RaisedButton.icon(
-              textColor: Colors.white,
-              color: Theme.of(context).accentColor,
               onPressed: () async {
                 setState(() {
                   certificate.creationDateTime = DateTime.now();
@@ -82,7 +80,6 @@ class CertificateViewState extends State<CertificateView> {
       width: double.infinity,
       child: Card(
         margin: EdgeInsets.only(top: 16),
-        color: Utils.hexToColor('#ebebeb'),
         child: Padding(
           padding: EdgeInsets.all(12),
           child: Column(
@@ -169,7 +166,6 @@ class CertificateViewState extends State<CertificateView> {
       width: double.infinity,
       child: Card(
         margin: EdgeInsets.only(top: 16),
-        color: Utils.hexToColor('#ebebeb'),
         child: Padding(
           padding: EdgeInsets.all(12),
           child: Column(
@@ -213,7 +209,6 @@ class CertificateViewState extends State<CertificateView> {
       width: double.infinity,
       child: Card(
         margin: EdgeInsets.only(top: 16),
-        color: Utils.hexToColor('#ebebeb'),
         child: Padding(
           padding: EdgeInsets.all(12),
           child: Column(
@@ -249,8 +244,6 @@ class CertificateViewState extends State<CertificateView> {
                         child: Padding(
                           padding: EdgeInsets.all(4),
                           child: RaisedButton.icon(
-                            textColor: Colors.white,
-                            color: Theme.of(context).accentColor,
                             onPressed: () => {_generateQrcode()},
                             icon: Icon(Icons.qr_code_outlined, size: 22),
                             label: Text(
@@ -264,8 +257,6 @@ class CertificateViewState extends State<CertificateView> {
                         child: Padding(
                           padding: EdgeInsets.all(4),
                           child: RaisedButton.icon(
-                            textColor: Colors.white,
-                            color: Theme.of(context).accentColor,
                             onPressed: () async =>
                                 {await PdfGeneration.createPDF(certificate)},
                             icon: Icon(Icons.picture_as_pdf_outlined, size: 22),
@@ -322,13 +313,13 @@ class CertificateViewState extends State<CertificateView> {
               Padding(
                 padding: EdgeInsets.only(right: 8),
                 child: Icon(Icons.warning_amber_outlined,
-                    color: Utils.hexToColor('#e1000f'), size: 24),
+                    color: Theme.of(context).accentColor, size: 24),
               ),
               Text(
                 "L'heure est dépassée",
                 style: TextStyle(
                     fontSize: 16,
-                    color: Utils.hexToColor('#e1000f'),
+                    color: Theme.of(context).accentColor,
                     fontWeight: FontWeight.w500),
               ),
             ],

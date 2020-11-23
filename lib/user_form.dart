@@ -40,8 +40,6 @@ class UserFormState extends State<UserForm> {
                 child: Padding(
                   padding: const EdgeInsetsDirectional.only(start: 16, end: 16),
                   child: RaisedButton(
-                    textColor: Colors.white,
-                    color: Theme.of(context).accentColor,
                     padding: EdgeInsets.only(top: 16, bottom: 16),
                     child: Text('Enregistrer', style: TextStyle(fontSize: 18)),
                     onPressed: () async {

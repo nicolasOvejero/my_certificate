@@ -39,7 +39,7 @@ class _TabBarController extends State<TabBarController>
               appBar: AppBar(
                 bottom: TabBar(
                   controller: _tabController,
-                  indicatorColor: Utils.hexToColor('#e1000f'),
+                  indicatorColor: Theme.of(context).accentColor,
                   tabs: [
                     Tab(
                         text: 'Utilisateur',
@@ -59,6 +59,13 @@ class _TabBarController extends State<TabBarController>
                   ],
                 ),
                 title: Text(widget.title),
+                actions: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.share),
+                    onPressed: () {
+                    },
+                  )
+                ],
               ),
               body: TabBarView(
                 controller: _tabController,

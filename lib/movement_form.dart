@@ -190,8 +190,6 @@ class MovementFormState extends State<MovementForm> {
       SizedBox(
         width: double.infinity,
         child: RaisedButton(
-          textColor: Colors.white,
-          color: Theme.of(context).accentColor,
           padding: EdgeInsets.only(top: 16, bottom: 16),
           child:
               Text('Générer mon attestation', style: TextStyle(fontSize: 18)),
