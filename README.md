@@ -1,16 +1,8 @@
-# my_certificate
+# Mon attestation
 
-Simple application to generate certificate for the french law
+Un projet créé avec Flutter pour générer une attestation française de déplacement.
 
-## Getting Started
+Elle permet à l'utilisateur de renseigner les informations nécessaires pour la 
+génération du PDF officiel et du QRCODE avec les informations du déplacement.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Elle peut géolocaliser l'utilisateur et renseigner l'adresse trouvée pour simplifier l'utilisation.
