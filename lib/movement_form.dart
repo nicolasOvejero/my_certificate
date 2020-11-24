@@ -24,7 +24,7 @@ class MovementFormState extends State<MovementForm> {
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
             certificate = snapshot.data;
-            return _buildMovementForm();
+            return SingleChildScrollView(child: _buildMovementForm());
           }
           return Center(
             child: SizedBox(
@@ -198,6 +198,7 @@ class MovementFormState extends State<MovementForm> {
             await StorageService.storeCertificate(certificate);
             widget.callbackTabBar(2);
             Scaffold.of(context).showSnackBar(SnackBar(
+              padding: EdgeInsets.only(left: 24, top: 8, bottom: 8),
               content: Text("Attestation générée"),
               backgroundColor: Colors.green,
             ));

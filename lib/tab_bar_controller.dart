@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_certificate/certificate_view.dart';
 import 'package:my_certificate/movement_form.dart';
 import 'package:my_certificate/user_form.dart';
-import 'package:my_certificate/utils.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TabBarController extends StatefulWidget {
   TabBarController({Key key, this.title}) : super(key: key);
@@ -42,17 +41,17 @@ class _TabBarController extends State<TabBarController>
                   indicatorColor: Theme.of(context).accentColor,
                   tabs: [
                     Tab(
-                        text: 'Utilisateur',
+                        text: AppLocalizations.of(context).user,
                         icon: currentTabIndex == 0
                             ? Icon(Icons.person_pin_rounded)
                             : Icon(Icons.person_pin_outlined)),
                     Tab(
-                        text: 'Motifs',
+                        text: AppLocalizations.of(context).reason,
                         icon: currentTabIndex == 1
                             ? Icon(Icons.where_to_vote)
                             : Icon(Icons.where_to_vote_outlined)),
                     Tab(
-                        text: 'Attestations',
+                        text: AppLocalizations.of(context).certificate,
                         icon: currentTabIndex == 2
                             ? Icon(Icons.insert_drive_file)
                             : Icon(Icons.insert_drive_file_outlined)),
@@ -70,15 +69,15 @@ class _TabBarController extends State<TabBarController>
               body: TabBarView(
                 controller: _tabController,
                 children: [
-                  SingleChildScrollView(child: UserForm(_checkTabBarPosition)),
-                  SingleChildScrollView(child: MovementForm(_checkTabBarPosition)),
-                  SingleChildScrollView(child: CertificateView(_checkTabBarPosition)),
+                  UserForm(_checkTabBarPosition),
+                  MovementForm(_checkTabBarPosition),
+                  CertificateView(_checkTabBarPosition),
                 ],
               ),
             );
   }
 
-  _handleTabSelection() {
+  void _handleTabSelection() {
     setState(() {
       currentTabIndex = _tabController.index;
     });

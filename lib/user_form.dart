@@ -1,7 +1,9 @@
+import 'package:async/async.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:my_certificate/certificate.dart';
+import 'package:my_certificate/location_service.dart';
 import 'package:my_certificate/storage_service.dart';
 import 'package:my_certificate/utils.dart';
 
@@ -16,7 +18,11 @@ class UserForm extends StatefulWidget {
 
 class UserFormState extends State<UserForm> {
   final _informationFormKey = GlobalKey<FormState>();
-  Certificate certificate;
+  final AsyncMemoizer _getOneTimeAddress = AsyncMemoizer();
+  final streetController = TextEditingController();
+  final cityController = TextEditingController();
+  final zipCodeController = TextEditingController();
+  Certificate certificate = Certificate();
 
   @override
   void dispose() {
@@ -31,32 +37,39 @@ class UserFormState extends State<UserForm> {
           if (snapshot.hasData) {
             certificate = snapshot.data;
 
-            return Column(children: <Widget>[
-              Container(
-                  padding: EdgeInsets.only(top: 16, right: 16, left: 16),
-                  child: buildGeneralForm()),
-              SizedBox(
-                width: double.infinity,
-                child: Padding(
-                  padding: const EdgeInsetsDirectional.only(start: 16, end: 16),
-                  child: RaisedButton(
-                    padding: EdgeInsets.only(top: 16, bottom: 16),
-                    child: Text('Enregistrer', style: TextStyle(fontSize: 18)),
-                    onPressed: () async {
-                      if (_informationFormKey.currentState.validate()) {
-                        _informationFormKey.currentState.save();
-                        widget.callbackTabBar(1);
-                        await StorageService.storeCertificate(certificate);
-                        Scaffold.of(context).showSnackBar(SnackBar(
-                          content: Text("Information enregistées"),
-                          backgroundColor: Colors.green,
-                        ));
-                      }
-                    },
+            _getOneTimeAddress.runOnce(() => _tryToGetAddress());
+
+            return SingleChildScrollView(
+              child: Column(children: <Widget>[
+                Container(
+                    padding: EdgeInsets.only(top: 16, right: 16, left: 16),
+                    child: _buildGeneralForm()),
+                SizedBox(
+                  width: double.infinity,
+                  child: Padding(
+                    padding:
+                        const EdgeInsetsDirectional.only(start: 16, end: 16),
+                    child: RaisedButton(
+                      padding: EdgeInsets.only(top: 16, bottom: 16),
+                      child:
+                          Text('Enregistrer', style: TextStyle(fontSize: 18)),
+                      onPressed: () async {
+                        if (_informationFormKey.currentState.validate()) {
+                          _informationFormKey.currentState.save();
+                          await StorageService.storeCertificate(certificate);
+                          widget.callbackTabBar(1);
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            padding: EdgeInsets.only(left: 24, top: 8, bottom: 8),
+                            content: Text("Information enregistées"),
+                            backgroundColor: Colors.green,
+                          ));
+                        }
+                      },
+                    ),
                   ),
                 ),
-              ),
-            ]);
+              ]),
+            );
           }
           return Center(
             child: SizedBox(
@@ -68,7 +81,7 @@ class UserFormState extends State<UserForm> {
         });
   }
 
-  Widget buildGeneralForm() {
+  Widget _buildGeneralForm() {
     return Form(
         key: _informationFormKey,
         autovalidateMode: AutovalidateMode.always,
@@ -156,7 +169,7 @@ class UserFormState extends State<UserForm> {
           Padding(
             padding: const EdgeInsetsDirectional.only(bottom: 16),
             child: TextFormField(
-              initialValue: certificate?.address?.street,
+              controller: streetController,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.house),
                 border: OutlineInputBorder(
@@ -174,7 +187,7 @@ class UserFormState extends State<UserForm> {
           Padding(
             padding: const EdgeInsetsDirectional.only(bottom: 16),
             child: TextFormField(
-              initialValue: certificate?.address?.city,
+              controller: cityController,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.house),
                 border: OutlineInputBorder(
@@ -192,7 +205,7 @@ class UserFormState extends State<UserForm> {
           Padding(
             padding: const EdgeInsetsDirectional.only(bottom: 16),
             child: TextFormField(
-              initialValue: certificate?.address?.zipCode,
+              controller: zipCodeController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.house),
@@ -209,5 +222,22 @@ class UserFormState extends State<UserForm> {
             ),
           ),
         ]));
+  }
+
+  void _tryToGetAddress() {
+    if (!certificate.address.isEmpty()) {
+      streetController.text = certificate?.address?.street;
+      cityController.text = certificate?.address?.city;
+      zipCodeController.text = certificate?.address?.zipCode;
+      return ;
+    }
+
+    LocationService.checkLocationPermission().then((value) {
+      setState(() {
+        streetController.text = value.street;
+        cityController.text = value.city;
+        zipCodeController.text = value.zipCode;
+      });
+    });
   }
 }

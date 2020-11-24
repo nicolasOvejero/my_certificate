@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_certificate/tab_bar_controller.dart';
 import 'package:my_certificate/utils.dart';
 
@@ -12,6 +13,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Mon attestation de sortie',
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         theme: ThemeData(
           brightness: Brightness.light,
           primaryColor: Utils.hexToColor('#000191'),
@@ -25,6 +28,7 @@ class MyApp extends StatelessWidget {
           toggleableActiveColor:  Utils.hexToColor('#000191'),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
+/*
         darkTheme: ThemeData(
           brightness: Brightness.dark,
           primaryColor: Utils.hexToColor('#000048'),
@@ -39,6 +43,7 @@ class MyApp extends StatelessWidget {
           toggleableActiveColor:  Utils.hexToColor('#000191'),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
+*/
         home: TabBarController(title: 'Mon attestation'));
   }
 }

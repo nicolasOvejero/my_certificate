@@ -1,0 +1,14 @@
+{
+  "user": "Utilisateur",
+  "@user": {
+    "description": "Tab user label"
+  },
+  "reason": "Motifs",
+  "@reason": {
+    "description": "Tab reason label"
+  },
+  "certificate": "Attestations",
+  "@certificate": {
+    "description": "Tab certificate label"
+  }
+}

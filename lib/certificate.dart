@@ -50,7 +50,7 @@ class Certificate {
         type = MovementType.values.singleWhere(
             (enumItem) => enumItem.toString() == json['type'],
             orElse: () => null),
-        creationDateTime = DateTime.parse(json['creationDateTime']);
+        creationDateTime = DateTime.tryParse(json['creationDateTime']);
 
   Map<String, dynamic> toJson() => {
         'firstname': firstname,

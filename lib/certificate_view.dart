@@ -26,7 +26,20 @@ class CertificateViewState extends State<CertificateView> {
         builder: (BuildContext context, AsyncSnapshot<Certificate> snapshot) {
           if (snapshot.hasData) {
             certificate = snapshot.data;
-            return _buildView();
+            if (certificate.isEmpty() || !certificate.hasMovementType()) {
+              return Center(
+                child: Text(
+                  "Vous n'avez pas d'attestation de sortie",
+                  style: TextStyle(
+                      color: Theme.of(context).accentColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900
+                  ),
+                ),
+              );
+            }
+
+            return SingleChildScrollView(child: _buildView());
           }
           return Center(
             child: SizedBox(
@@ -102,7 +115,7 @@ class CertificateViewState extends State<CertificateView> {
                         child: Padding(
                           padding: EdgeInsets.only(top: 2),
                           child: Text(
-                            '${certificate.lastname.toUpperCase()} ${certificate.firstname}',
+                            '${certificate.lastname?.toUpperCase()} ${certificate.firstname}',
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w500),
                           ),
