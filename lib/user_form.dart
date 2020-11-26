@@ -60,6 +60,8 @@ class UserFormState extends State<UserForm> {
                       onPressed: () async {
                         if (_informationFormKey.currentState.validate()) {
                           _informationFormKey.currentState.save();
+                          certificate.address.lat = null;
+                          certificate.address.long = null;
                           await StorageService.storeCertificate(certificate);
                           widget.callbackTabBar(1);
                           Scaffold.of(context).showSnackBar(SnackBar(

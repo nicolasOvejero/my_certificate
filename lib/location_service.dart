@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
+import 'package:latlong/latlong.dart';
 import 'package:my_certificate/certificate.dart';
 
 class LocationService {
@@ -42,6 +43,25 @@ class LocationService {
     return Address(
         values['address']['city'],
         '${values['address']['house_number']} ${values['address']['road']}',
-        values['address']['postcode']);
+        values['address']['postcode'],
+        long: long,
+        lat: lat);
+  }
+
+  static Future<LatLng> getLongLatFromAddress(String address) async {
+    http.Response rep =
+        await http.get('$BASE_NOMINATIM_URL/search?format=json&q=$address');
+    if (rep.body.isEmpty) {
+      return null;
+    }
+
+    dynamic values = json.decode(rep.body);
+
+    if (values == []) {
+      return null;
+    }
+
+    return LatLng(
+        double.parse(values[0]['lat']), double.parse(values[0]['lon']));
   }
 }

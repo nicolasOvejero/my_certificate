@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:my_certificate/certificate_view.dart';
-import 'package:my_certificate/movement_form.dart';
-import 'package:my_certificate/user_form.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_certificate/certificate.dart';
+import 'package:my_certificate/certificate_view.dart';
+import 'package:my_certificate/map_page.dart';
+import 'package:my_certificate/movement_form.dart';
+import 'package:my_certificate/storage_service.dart';
+import 'package:my_certificate/user_form.dart';
 
 class TabBarController extends StatefulWidget {
   TabBarController({Key key, this.title}) : super(key: key);
@@ -17,6 +20,7 @@ class _TabBarController extends State<TabBarController>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
   int currentTabIndex;
+  Certificate certificate;
 
   @override
   void initState() {
@@ -34,6 +38,7 @@ class _TabBarController extends State<TabBarController>
 
   @override
   Widget build(BuildContext context) {
+    _getCertificate();
     return Scaffold(
               appBar: AppBar(
                 bottom: TabBar(
@@ -59,11 +64,15 @@ class _TabBarController extends State<TabBarController>
                 ),
                 title: Text(widget.title),
                 actions: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.share),
+                  certificate != null ? IconButton(
+                    icon: Icon(Icons.map_outlined),
                     onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MapPage(certificate)),
+                      );
                     },
-                  )
+                  ) : Container()
                 ],
               ),
               body: TabBarView(
@@ -87,5 +96,13 @@ class _TabBarController extends State<TabBarController>
     setState(() {
       _tabController.index = position;
     });
+  }
+
+  void _getCertificate() async {
+    certificate = await StorageService.getStoredCertificate();
+    if (certificate.isEmpty()) {
+      certificate = null;
+    }
+    setState(() {});
   }
 }

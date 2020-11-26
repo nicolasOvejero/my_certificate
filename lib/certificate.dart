@@ -14,19 +14,30 @@ class Address {
   String city;
   String street;
   String zipCode;
+  double lat;
+  double long;
 
-  Address(this.city, this.street, this.zipCode);
+  Address(this.city, this.street, this.zipCode, { this.lat, this.long });
 
   Address.fromJson(Map<String, dynamic> json)
       : city = json['city'],
         street = json['street'],
-        zipCode = json['zipCode'];
+        zipCode = json['zipCode'],
+        lat = json['lat'],
+        long = json['long']
+  ;
 
   Map<String, dynamic> toJson() =>
-      {'city': city, 'street': street, 'zipCode': zipCode};
+      {'city': city, 'street': street, 'zipCode': zipCode, 'lat': lat, 'long': long};
 
   bool isEmpty() {
     return this.city == null && this.street == null && this.zipCode == null;
+  }
+
+  String encodedAddress() {
+    return "${this.street.replaceAll(' ', '+')}+"
+        "${this.city.replaceAll(' ', '+')}+"
+        "${this.zipCode.replaceAll(' ', '+')}";
   }
 }
 
