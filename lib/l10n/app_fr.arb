@@ -10,5 +10,125 @@
   "certificate": "Attestations",
   "@certificate": {
     "description": "Tab certificate label"
+  },
+  "noCertificate": "Vous n'avez pas d'attestation de sortie",
+  "@noCertificate": {
+    "description": "Message is no data present for certificate"
+  },
+  "certificateTitle": "Mon attestation de sortie",
+  "@certificateTitle": {
+    "description": "Label for the certificate page"
+  },
+  "certificateRefresh": "Regenerer l'attestation",
+  "@certificateRefresh": {
+    "description": "Label for the button"
+  },
+  "certificateFor": "Attestation pour :",
+  "@certificateFor": {
+    "description": "Label for card with user information"
+  },
+  "certificateMovement": "Motif de sortie :",
+  "@certificateMovement": {
+    "description": "Label for card with movement information"
+  },
+  "certificateDateDocuments": "Date et document de sortie :",
+  "@certificateDateDocuments": {
+    "description": "Label for card with date and documents"
+  },
+  "certificateQrcode": "Voir le QRCODE",
+  "@certificateQrcode": {
+    "description": "Label for button to show qrcode"
+  },
+  "certificatePdf": "Voir le PDF",
+  "@certificatePdf": {
+    "description": "Label for button to show pdf"
+  },
+  "certificateTimeOut": "L'heure est dépassée",
+  "@certificateTimeOut": {
+    "description": "Message for time out case"
+  },
+  "movementFormWorkExp": "Déplacements entre le domicile et le lieu d'exercice de l'activité professionnelle ou un établissement d'enseignement ou de formation, déplacements professionnels ne pouvant être différés, déplacements pour un concours ou un examen.",
+  "@movementFormWorkExp": {
+    "description": "Label for work movement type"
+  },
+  "movementFormShoppingExp": "Déplacements pour effectuer des achats de fournitures nécessaires à l'activité professionnelle, des achats de première nécessité dans des établissements dont les activités demeurent autorisées, le retrait de commande et les livraisons à domicile.",
+  "@movementFormShoppingExp": {
+    "description": "Label for shopping movement type"
+  },
+  "movementFormMedicalExp": "Consultations, examens et soins ne pouvant être assurés à distance et l'achat de médicaments.",
+  "@movementFormMedicalExp": {
+    "description": "Label for work movement type"
+  },
+  "movementFormFamilyExp": "Déplacements pour motif familial impérieux, pour l'assistance aux personnes vulnérables et précaires ou la garde d'enfants.",
+  "@movementFormFamilyExp": {
+    "description": "Label for famlily movement type"
+  },
+  "movementFormHandicapExp": "Déplacement des personnes en situation de handicap et leur accompagnant.",
+  "@movementFormHandicapExp": {
+    "description": "Label for handicap movement type"
+  },
+  "movementFormSportExp": "Déplacements brefs, dans la limite d'une heure quotidienne et dans un rayon maximal d'un kilomètre autour du domicile, liés soit à l'activité physique individuelle des personnes, à l'exclusion de toute pratique sportive collective et de toute proximité avec d'autres personnes, soit à la promenade avec les seules personnes regroupées dans un même domicile, soit aux besoins des animaux de compagnie.",
+  "@movementFormSportExp": {
+    "description": "Label for sport movement type"
+  },
+  "movementFormAdministrativeExp": "Convocation judiciaire ou administrative et pour se rendre dans un service public.",
+  "@movementFormAdministrativeExp": {
+    "description": "Label for administrative movement type"
+  },
+  "movementFormGeneralInterestExp": "Participation à des missions d'intérêt général sur demande de l'autorité administrative.",
+  "@movementFormGeneralInterestExp": {
+    "description": "Label for general interest movement type"
+  },
+  "movementFormSchoolExp": "Déplacement pour chercher les enfants à l'école et à l'occasion de leurs activités périscolaires.",
+  "@movementFormSchoolExp": {
+    "description": "Label for school movement type"
+  },
+  "movementFormAction": "Générer mon attestation",
+  "@movementFormAction": {
+    "description": "Label for the movement form button"
+  },
+  "movementFormSnackBar": "Attestation générée",
+  "@movementFormSnackBar": {
+    "description": "Label for the movement form snackbar"
+  },
+  "userFormSave": "Enregistrer",
+  "@userFormSave": {
+    "description": "Label for the user form button"
+  },
+  "userFormSnackBar": "Information enregistées",
+  "@userFormSnackBar": {
+    "description": "Label for the user form snackbar"
+  },
+  "userFormName": "Nom",
+  "@userFormName": {
+    "description": "Label for the user input name"
+  },
+  "userFormFirstname": "Prénom",
+  "@userFormFirstname": {
+    "description": "Label for the user input firstname"
+  },
+  "userFormBirthday": "Date de naissance",
+  "@userFormBirthday": {
+    "description": "Label for the user input birthday"
+  },
+  "userFormBirthplace": "Lieux de naissance",
+  "@userFormBirthplace": {
+    "description": "Label for the user input birth place"
+  },
+  "userFormAddress": "Adresse",
+  "@userFormAddress": {
+    "description": "Label for the user input address"
+  },
+  "userFormCity": "Ville",
+  "@userFormCity": {
+    "description": "Label for the user input city"
+  },
+  "userFormZipCode": "Code postal",
+  "@userFormZipCode": {
+    "description": "Label for the user input zip code"
+  },
+  "userFormError": "Ce champ doit être rempli",
+  "@userFormError": {
+    "description": "Error message for user form"
   }
 }

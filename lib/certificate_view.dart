@@ -6,6 +6,7 @@ import 'package:my_certificate/pdf_generation.dart';
 import 'package:my_certificate/qrcode_dialog_view.dart';
 import 'package:my_certificate/storage_service.dart';
 import 'package:my_certificate/utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CertificateView extends StatefulWidget {
   final Function callbackTabBar;
@@ -29,7 +30,7 @@ class CertificateViewState extends State<CertificateView> {
             if (certificate.isEmpty() || !certificate.hasMovementType()) {
               return Center(
                 child: Text(
-                  "Vous n'avez pas d'attestation de sortie",
+                  AppLocalizations.of(context).noCertificate,
                   style: TextStyle(
                       color: Theme.of(context).accentColor,
                       fontSize: 20,
@@ -56,7 +57,7 @@ class CertificateViewState extends State<CertificateView> {
       padding: EdgeInsets.all(16),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
-          "Mon attestation de sortie",
+          AppLocalizations.of(context).certificateTitle,
           style: TextStyle(
               color: Theme.of(context).accentColor,
               fontSize: 24,
@@ -78,7 +79,7 @@ class CertificateViewState extends State<CertificateView> {
               },
               icon: Icon(Icons.refresh_outlined, size: 22),
               label: Text(
-                "Regenerer l'attestation",
+                AppLocalizations.of(context).certificateRefresh,
                 style: TextStyle(fontSize: 14),
               ),
             ),
@@ -99,7 +100,7 @@ class CertificateViewState extends State<CertificateView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "Attestation pour :",
+                  AppLocalizations.of(context).certificateFor,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                 ),
                 Padding(
@@ -185,7 +186,7 @@ class CertificateViewState extends State<CertificateView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "Motif de sortie :",
+                  AppLocalizations.of(context).certificateMovement,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                 ),
                 Padding(
@@ -228,7 +229,7 @@ class CertificateViewState extends State<CertificateView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "Date et document de sortie :",
+                  AppLocalizations.of(context).certificateDateDocuments,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                 ),
                 Padding(
@@ -260,7 +261,7 @@ class CertificateViewState extends State<CertificateView> {
                             onPressed: () => {_generateQrcode()},
                             icon: Icon(Icons.qr_code_outlined, size: 22),
                             label: Text(
-                              'Voir le QRCODE',
+                              AppLocalizations.of(context).certificateQrcode,
                               style: TextStyle(fontSize: 13),
                             ),
                           ),
@@ -274,7 +275,7 @@ class CertificateViewState extends State<CertificateView> {
                                 {await PdfGeneration.createPDF(certificate)},
                             icon: Icon(Icons.picture_as_pdf_outlined, size: 22),
                             label: Text(
-                              'Voir le PDF',
+                              AppLocalizations.of(context).certificatePdf,
                               style: TextStyle(fontSize: 13),
                             ),
                           ),
@@ -329,7 +330,7 @@ class CertificateViewState extends State<CertificateView> {
                     color: Theme.of(context).accentColor, size: 24),
               ),
               Text(
-                "L'heure est dépassée",
+                AppLocalizations.of(context).certificateTimeOut,
                 style: TextStyle(
                     fontSize: 16,
                     color: Theme.of(context).accentColor,
@@ -337,7 +338,7 @@ class CertificateViewState extends State<CertificateView> {
               ),
             ],
           ),
-        );
+          );
       }
       return Padding(
         padding: EdgeInsets.only(top: 8),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:my_certificate/certificate.dart';
 import 'package:my_certificate/storage_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MovementForm extends StatefulWidget {
   final Function callbackTabBar;
@@ -24,7 +25,7 @@ class MovementFormState extends State<MovementForm> {
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
             certificate = snapshot.data;
-            return SingleChildScrollView(child: _buildMovementForm());
+            return SingleChildScrollView(child: _buildMovementForm(context));
           }
           return Center(
             child: SizedBox(
@@ -36,16 +37,12 @@ class MovementFormState extends State<MovementForm> {
         });
   }
 
-  Widget _buildMovementForm() {
+  Widget _buildMovementForm(BuildContext context) {
     return Column(children: <Widget>[
       Padding(
           padding: EdgeInsets.only(top: 16),
           child: RadioListTile(
-            title: const Text(
-                "Déplacements entre le domicile et le lieu d'exercice de l'activité "
-                "professionnelle ou un établissement d'enseignement ou de formation, "
-                "déplacements professionnels ne pouvant être différés, "
-                "déplacements pour un concours ou un examen."),
+            title: Text(AppLocalizations.of(context).movementFormWorkExp),
             value: MovementType.work,
             groupValue: certificate.type,
             onChanged: (MovementType value) {
@@ -59,11 +56,7 @@ class MovementFormState extends State<MovementForm> {
           child: Divider(thickness: 2)
       ),
       RadioListTile(
-        title: const Text(
-            "Déplacements pour effectuer des achats de fournitures nécessaires à "
-            "l'activité professionnelle, des achats de première nécessité dans "
-            "des établissements dont les activités demeurent autorisées, "
-            "le retrait de commande et les livraisons à domicile."),
+        title: Text(AppLocalizations.of(context).movementFormShoppingExp),
         value: MovementType.shopping,
         groupValue: certificate.type,
         onChanged: (MovementType value) {
@@ -77,9 +70,7 @@ class MovementFormState extends State<MovementForm> {
           child: Divider(thickness: 2)
       ),
       RadioListTile(
-        title: const Text(
-            "Consultations, examens et soins ne pouvant être assurés à "
-            "distance et l'achat de médicaments."),
+        title: Text(AppLocalizations.of(context).movementFormMedicalExp),
         value: MovementType.medical,
         groupValue: certificate.type,
         onChanged: (MovementType value) {
@@ -93,9 +84,7 @@ class MovementFormState extends State<MovementForm> {
           child: Divider(thickness: 2)
       ),
       RadioListTile(
-        title: const Text(
-            "Déplacements pour motif familial impérieux, pour l'assistance aux "
-            "personnes vulnérables et précaires ou la garde d'enfants."),
+        title: Text(AppLocalizations.of(context).movementFormFamilyExp),
         value: MovementType.family,
         groupValue: certificate.type,
         onChanged: (MovementType value) {
@@ -109,8 +98,7 @@ class MovementFormState extends State<MovementForm> {
           child: Divider(thickness: 2)
       ),
       RadioListTile(
-        title: const Text(
-            "Déplacement des personnes en situation de handicap et leur accompagnant."),
+        title: Text(AppLocalizations.of(context).movementFormHandicapExp),
         value: MovementType.handicap,
         groupValue: certificate.type,
         onChanged: (MovementType value) {
@@ -124,13 +112,7 @@ class MovementFormState extends State<MovementForm> {
           child: Divider(thickness: 2)
       ),
       RadioListTile(
-        title: const Text(
-            "Déplacements brefs, dans la limite d'une heure quotidienne et dans un "
-            "rayon maximal d'un kilomètre autour du domicile, liés soit à l'activité "
-            "physique individuelle des personnes, à l'exclusion de toute pratique "
-            "sportive collective et de toute proximité avec d'autres personnes, "
-            "soit à la promenade avec les seules personnes regroupées dans un "
-            "même domicile, soit aux besoins des animaux de compagnie."),
+        title: Text(AppLocalizations.of(context).movementFormSportExp),
         value: MovementType.sport,
         groupValue: certificate.type,
         onChanged: (MovementType value) {
@@ -144,8 +126,7 @@ class MovementFormState extends State<MovementForm> {
           child: Divider(thickness: 2)
       ),
       RadioListTile(
-        title: const Text("Convocation judiciaire ou administrative et pour se "
-            "rendre dans un service public."),
+        title: Text(AppLocalizations.of(context).movementFormAdministrativeExp),
         value: MovementType.administrative,
         groupValue: certificate.type,
         onChanged: (MovementType value) {
@@ -159,8 +140,7 @@ class MovementFormState extends State<MovementForm> {
           child: Divider(thickness: 2)
       ),
       RadioListTile(
-        title: const Text("Participation à des missions d'intérêt général sur "
-            "demande de l'autorité administrative."),
+        title: Text(AppLocalizations.of(context).movementFormGeneralInterestExp),
         value: MovementType.general_interest,
         groupValue: certificate.type,
         onChanged: (MovementType value) {
@@ -176,9 +156,7 @@ class MovementFormState extends State<MovementForm> {
       Padding(
           padding: EdgeInsets.only(bottom: 16),
           child: RadioListTile(
-            title: const Text(
-                "Déplacement pour chercher les enfants à l'école et à "
-                "l'occasion de leurs activités périscolaires."),
+            title: Text(AppLocalizations.of(context).movementFormSchoolExp),
             value: MovementType.school,
             groupValue: certificate.type,
             onChanged: (MovementType value) {
@@ -192,14 +170,17 @@ class MovementFormState extends State<MovementForm> {
         child: RaisedButton(
           padding: EdgeInsets.only(top: 16, bottom: 16),
           child:
-              Text('Générer mon attestation', style: TextStyle(fontSize: 18)),
+              Text(
+                  AppLocalizations.of(context).movementFormAction,
+                  style: TextStyle(fontSize: 18)
+              ),
           onPressed: () async {
             certificate.creationDateTime = DateTime.now();
             await StorageService.storeCertificate(certificate);
             widget.callbackTabBar(2);
             Scaffold.of(context).showSnackBar(SnackBar(
               padding: EdgeInsets.only(left: 24, top: 8, bottom: 8),
-              content: Text("Attestation générée"),
+              content: Text(AppLocalizations.of(context).movementFormSnackBar),
               backgroundColor: Colors.green,
             ));
           },

@@ -6,6 +6,7 @@ import 'package:my_certificate/certificate.dart';
 import 'package:my_certificate/location_service.dart';
 import 'package:my_certificate/storage_service.dart';
 import 'package:my_certificate/utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UserForm extends StatefulWidget {
   final Function callbackTabBar;
@@ -52,7 +53,10 @@ class UserFormState extends State<UserForm> {
                     child: RaisedButton(
                       padding: EdgeInsets.only(top: 16, bottom: 16),
                       child:
-                          Text('Enregistrer', style: TextStyle(fontSize: 18)),
+                          Text(
+                              AppLocalizations.of(context).userFormSave,
+                              style: TextStyle(fontSize: 18)
+                          ),
                       onPressed: () async {
                         if (_informationFormKey.currentState.validate()) {
                           _informationFormKey.currentState.save();
@@ -60,7 +64,7 @@ class UserFormState extends State<UserForm> {
                           widget.callbackTabBar(1);
                           Scaffold.of(context).showSnackBar(SnackBar(
                             padding: EdgeInsets.only(left: 24, top: 8, bottom: 8),
-                            content: Text("Information enregistées"),
+                            content: Text(AppLocalizations.of(context).userFormSnackBar),
                             backgroundColor: Colors.green,
                           ));
                         }
@@ -95,10 +99,10 @@ class UserFormState extends State<UserForm> {
                 border: OutlineInputBorder(
                   borderSide: BorderSide(),
                 ),
-                labelText: 'Nom',
+                labelText: AppLocalizations.of(context).userFormName,
               ),
               validator: (value) =>
-                  value.isEmpty ? 'Ce champ doit être rempli' : null,
+                  value.isEmpty ? AppLocalizations.of(context).userFormError : null,
               onSaved: (String value) {
                 certificate.lastname = value;
               },
@@ -113,10 +117,10 @@ class UserFormState extends State<UserForm> {
                 border: OutlineInputBorder(
                   borderSide: BorderSide(),
                 ),
-                labelText: 'Prénom',
+                labelText: AppLocalizations.of(context).userFormFirstname,
               ),
               validator: (value) =>
-                  value.isEmpty ? 'Ce champ doit être rempli' : null,
+                  value.isEmpty ? AppLocalizations.of(context).userFormError : null,
               onSaved: (String value) {
                 certificate.firstname = value;
               },
@@ -132,7 +136,7 @@ class UserFormState extends State<UserForm> {
                 border: OutlineInputBorder(
                   borderSide: BorderSide(),
                 ),
-                labelText: 'Date de naissance',
+                labelText: AppLocalizations.of(context).userFormBirthday,
               ),
               onShowPicker: (context, currentValue) {
                 return showDatePicker(
@@ -142,7 +146,7 @@ class UserFormState extends State<UserForm> {
                     lastDate: DateTime.now());
               },
               validator: (DateTime value) =>
-                  value == null ? 'Ce champ doit être rempli' : null,
+                  value == null ? AppLocalizations.of(context).userFormError : null,
               onSaved: (DateTime value) {
                 certificate.birthdate = value;
               },
@@ -157,10 +161,10 @@ class UserFormState extends State<UserForm> {
                 border: OutlineInputBorder(
                   borderSide: BorderSide(),
                 ),
-                labelText: 'Lieux de naissance',
+                labelText: AppLocalizations.of(context).userFormBirthplace,
               ),
               validator: (value) =>
-                  value.isEmpty ? 'Ce champ doit être rempli' : null,
+                  value.isEmpty ? AppLocalizations.of(context).userFormError : null,
               onSaved: (String value) {
                 certificate.birthplace = value;
               },
@@ -175,10 +179,10 @@ class UserFormState extends State<UserForm> {
                 border: OutlineInputBorder(
                   borderSide: BorderSide(),
                 ),
-                labelText: 'Adresse',
+                labelText: AppLocalizations.of(context).userFormAddress,
               ),
               validator: (value) =>
-                  value.isEmpty ? 'Ce champ doit être rempli' : null,
+                  value.isEmpty ? AppLocalizations.of(context).userFormError : null,
               onSaved: (String value) {
                 certificate.address.street = value;
               },
@@ -193,10 +197,10 @@ class UserFormState extends State<UserForm> {
                 border: OutlineInputBorder(
                   borderSide: BorderSide(),
                 ),
-                labelText: 'Ville',
+                labelText: AppLocalizations.of(context).userFormCity,
               ),
               validator: (value) =>
-                  value.isEmpty ? 'Ce champ doit être rempli' : null,
+                  value.isEmpty ? AppLocalizations.of(context).userFormError : null,
               onSaved: (String value) {
                 certificate.address.city = value;
               },
@@ -212,10 +216,10 @@ class UserFormState extends State<UserForm> {
                 border: OutlineInputBorder(
                   borderSide: BorderSide(),
                 ),
-                labelText: 'Code postal',
+                labelText: AppLocalizations.of(context).userFormZipCode,
               ),
               validator: (value) =>
-                  value.isEmpty ? 'Ce champ doit être rempli' : null,
+                  value.isEmpty ? AppLocalizations.of(context).userFormError : null,
               onSaved: (String value) {
                 certificate.address.zipCode = value;
               },
