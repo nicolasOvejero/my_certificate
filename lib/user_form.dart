@@ -239,11 +239,15 @@ class UserFormState extends State<UserForm> {
     }
 
     LocationService.checkLocationPermission().then((value) {
-      setState(() {
-        streetController.text = value.street;
-        cityController.text = value.city;
-        zipCodeController.text = value.zipCode;
-      });
+      if (value) {
+        LocationService.getPosition().then((value) {
+          setState(() {
+            streetController.text = value.street;
+            cityController.text = value.city;
+            zipCodeController.text = value.zipCode;
+          });
+        });
+      }
     });
   }
 }

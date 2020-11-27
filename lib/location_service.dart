@@ -9,7 +9,7 @@ class LocationService {
   static const String BASE_NOMINATIM_URL =
       'https://nominatim.openstreetmap.org';
 
-  static Future<Address> checkLocationPermission() async {
+  static Future<bool> checkLocationPermission() async {
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
@@ -17,10 +17,10 @@ class LocationService {
 
     if (permission == LocationPermission.always ||
         permission == LocationPermission.whileInUse) {
-      return getPosition();
+      return true;
     }
 
-    return Address(null, null, null);
+    return false;
   }
 
   static Future<Address> getPosition() async {
