@@ -1,12 +1,12 @@
 import 'package:barcode/barcode.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_certificate/certificate.dart';
 import 'package:my_certificate/pdf_generation.dart';
 import 'package:my_certificate/qrcode_dialog_view.dart';
 import 'package:my_certificate/storage_service.dart';
 import 'package:my_certificate/utils.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CertificateView extends StatefulWidget {
   final Function callbackTabBar;
@@ -34,13 +34,12 @@ class CertificateViewState extends State<CertificateView> {
                   style: TextStyle(
                       color: Theme.of(context).accentColor,
                       fontSize: 20,
-                      fontWeight: FontWeight.w900
-                  ),
+                      fontWeight: FontWeight.w900),
                 ),
               );
             }
 
-            return SingleChildScrollView(child: _buildView());
+            return SingleChildScrollView(child: _buildView(context));
           }
           return Center(
             child: SizedBox(
@@ -52,7 +51,7 @@ class CertificateViewState extends State<CertificateView> {
         });
   }
 
-  Widget _buildView() {
+  Widget _buildView(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(16),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -64,8 +63,8 @@ class CertificateViewState extends State<CertificateView> {
               fontWeight: FontWeight.w900),
         ),
         _buildUserInformation(),
-        _buildMovementInformation(),
-        _buildDateInformation(),
+        _buildMovementInformation(context),
+        _buildDateInformation(context),
         Padding(
           padding: EdgeInsets.only(top: 8),
           child: SizedBox(
@@ -175,116 +174,115 @@ class CertificateViewState extends State<CertificateView> {
     );
   }
 
-  Widget _buildMovementInformation() {
+  Widget _buildMovementInformation(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       child: Card(
         margin: EdgeInsets.only(top: 16),
         child: Padding(
           padding: EdgeInsets.all(12),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  AppLocalizations.of(context).certificateMovement,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 8),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(right: 8),
-                        child: _getMovementActivityIcon(),
-                      ),
-                      Text(
-                        Utils.mapMovementTypeToFrenchHuman(certificate.type),
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
-                      ),
-                    ],
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
+                  Widget>[
+            Text(
+              AppLocalizations.of(context).certificateMovement,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 8),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: _getMovementActivityIcon(),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 8),
-                  child: Text(
-                    Utils.mapMovementTypeToFrenchText(certificate.type),
-                    style: TextStyle(fontSize: 12, fontStyle: FontStyle.italic),
+                  Text(
+                    Utils.mapMovementTypeToFrenchHuman(certificate.type),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
-                ),
-              ]),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 8),
+              child: Text(
+                Utils.mapMovementTypeToFrenchText(certificate.type, context),
+                style: TextStyle(fontSize: 12, fontStyle: FontStyle.italic),
+              ),
+            ),
+          ]),
         ),
       ),
     );
   }
 
-  Widget _buildDateInformation() {
+  Widget _buildDateInformation(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       child: Card(
         margin: EdgeInsets.only(top: 16),
         child: Padding(
           padding: EdgeInsets.all(12),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  AppLocalizations.of(context).certificateDateDocuments,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 8),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(right: 8),
-                        child: Icon(Icons.access_time_outlined, size: 24),
-                      ),
-                      Text(
-                        '${Utils.dateFormat.format(certificate.creationDateTime)} à '
-                        '${Utils.hourFormat.format(certificate.creationDateTime)}',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
-                      ),
-                    ],
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
+                  Widget>[
+            Text(
+              AppLocalizations.of(context).certificateDateDocuments,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 8),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: Icon(Icons.access_time_outlined, size: 24),
                   ),
-                ),
-                _checkIfSport(),
-                Padding(
-                  padding: EdgeInsets.only(top: 8),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.all(4),
-                          child: RaisedButton.icon(
-                            onPressed: () => {_generateQrcode()},
-                            icon: Icon(Icons.qr_code_outlined, size: 22),
-                            label: Text(
-                              AppLocalizations.of(context).certificateQrcode,
-                              style: TextStyle(fontSize: 13),
-                            ),
-                          ),
+                  Text(
+                    '${Utils.dateFormat.format(certificate.creationDateTime)} à '
+                    '${Utils.hourFormat.format(certificate.creationDateTime)}',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
+            ),
+            _checkIfSport(),
+            Padding(
+              padding: EdgeInsets.only(top: 8),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(4),
+                      child: RaisedButton.icon(
+                        onPressed: () => {_generateQrcode()},
+                        icon: Icon(Icons.qr_code_outlined, size: 22),
+                        label: Text(
+                          AppLocalizations.of(context).certificateQrcode,
+                          style: TextStyle(fontSize: 13),
                         ),
                       ),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.all(4),
-                          child: RaisedButton.icon(
-                            onPressed: () async =>
-                                {await PdfGeneration.createPDF(certificate)},
-                            icon: Icon(Icons.picture_as_pdf_outlined, size: 22),
-                            label: Text(
-                              AppLocalizations.of(context).certificatePdf,
-                              style: TextStyle(fontSize: 13),
-                            ),
-                          ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(4),
+                      child: RaisedButton.icon(
+                        onPressed: () async => {
+                          await PdfGeneration.createPDF(certificate, context)
+                        },
+                        icon: Icon(Icons.picture_as_pdf_outlined, size: 22),
+                        label: Text(
+                          AppLocalizations.of(context).certificatePdf,
+                          style: TextStyle(fontSize: 13),
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ]),
+                ],
+              ),
+            ),
+          ]),
         ),
       ),
     );
@@ -316,7 +314,9 @@ class CertificateViewState extends State<CertificateView> {
 
   Widget _checkIfSport() {
     final DateTime creationLimit =
-        certificate.creationDateTime.add(new Duration(hours: 1));
+        certificate.creationDateTime.add(new Duration(hours: 3));
+    final int remainingHours = creationLimit.difference(DateTime.now()).inHours;
+    final int remainingMinutes = creationLimit.difference(DateTime.now()).inMinutes % 60;
 
     if (certificate.type == MovementType.sport) {
       if (DateTime.now().isAfter(creationLimit)) {
@@ -338,7 +338,7 @@ class CertificateViewState extends State<CertificateView> {
               ),
             ],
           ),
-          );
+        );
       }
       return Padding(
         padding: EdgeInsets.only(top: 8),
@@ -349,7 +349,9 @@ class CertificateViewState extends State<CertificateView> {
               child: Icon(Icons.timelapse_outlined, size: 24),
             ),
             Text(
-              "Il vous reste ${creationLimit.difference(DateTime.now()).inMinutes} minutes",
+              creationLimit.difference(DateTime.now()).inHours >= 1 ?
+              "Il vous reste $remainingHours heures et $remainingMinutes minutes"
+              : "Il vous reste $remainingMinutes minutes",
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
           ],

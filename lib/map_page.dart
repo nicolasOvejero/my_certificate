@@ -19,7 +19,7 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPage extends State<MapPage> {
-  static final double RADUIS_VALUE = 1000;
+  static final double RADUIS_VALUE = 20000;
 
   LatLng _addressPoint = LatLng(0, 0);
   List<Marker> _marker = [];
