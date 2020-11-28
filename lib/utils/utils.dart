@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'certificate.dart';
+import '../models/certificate.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Utils {
@@ -58,26 +58,26 @@ class Utils {
     return "";
   }
 
-  static String mapMovementTypeToFrenchHuman(MovementType type) {
+  static String mapMovementTypeToFrenchHuman(MovementType type, BuildContext context) {
     switch (type) {
       case MovementType.work:
-        return "Travail";
+        return AppLocalizations.of(context).workTitle;
       case MovementType.shopping:
-        return "Achats pro./première nécessité";
+        return AppLocalizations.of(context).shoppingTitle;
       case MovementType.medical:
-        return "Consultations/examens/soins";
+        return AppLocalizations.of(context).medicalTitle;
       case MovementType.family:
-        return "Déplacements motif impérieux";
+        return AppLocalizations.of(context).familyTitle;
       case MovementType.handicap:
-        return "Handicap et accompagnant";
+        return AppLocalizations.of(context).handicapTitle;
       case MovementType.sport:
-        return "Activité physique/Animaux de compagnie";
+        return AppLocalizations.of(context).sportTitle;
       case MovementType.administrative:
-        return "Convocation judiciaire/administrative";
+        return AppLocalizations.of(context).administrativeTitle;
       case MovementType.general_interest:
-        return "Missions d'intérêt général";
+        return AppLocalizations.of(context).generalInterestTitle;
       case MovementType.school:
-        return "Déplacement pour enfants";
+        return AppLocalizations.of(context).schoolTitle;
     }
     return "";
   }

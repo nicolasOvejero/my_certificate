@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_certificate/certificate.dart';
-import 'package:my_certificate/certificate_view.dart';
+import 'package:my_certificate/models/certificate.dart';
+import 'package:my_certificate/views/certificate_view.dart';
 import 'package:my_certificate/map_page.dart';
-import 'package:my_certificate/movement_form.dart';
-import 'package:my_certificate/storage_service.dart';
-import 'package:my_certificate/user_form.dart';
+import 'package:my_certificate/views/movement_form.dart';
+import 'package:my_certificate/services/storage_service.dart';
+import 'package:my_certificate/views/user_form.dart';
 
 class TabBarController extends StatefulWidget {
   TabBarController({Key key, this.title}) : super(key: key);

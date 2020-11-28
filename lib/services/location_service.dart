@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:latlong/latlong.dart';
-import 'package:my_certificate/certificate.dart';
+import 'package:my_certificate/models/certificate.dart';
 
 class LocationService {
   static const String BASE_NOMINATIM_URL =

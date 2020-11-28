@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_certificate/tab_bar_controller.dart';
-import 'package:my_certificate/utils.dart';
+import 'package:my_certificate/controllers/tab_bar_controller.dart';
+import 'package:my_certificate/utils/utils.dart';
 
 void main() {
   runApp(MyApp());

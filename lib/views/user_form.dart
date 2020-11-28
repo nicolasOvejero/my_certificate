@@ -2,10 +2,10 @@ import 'package:async/async.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:my_certificate/certificate.dart';
-import 'package:my_certificate/location_service.dart';
-import 'package:my_certificate/storage_service.dart';
-import 'package:my_certificate/utils.dart';
+import 'package:my_certificate/models/certificate.dart';
+import 'package:my_certificate/services/location_service.dart';
+import 'package:my_certificate/services/storage_service.dart';
+import 'package:my_certificate/utils/utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UserForm extends StatefulWidget {
@@ -49,7 +49,7 @@ class UserFormState extends State<UserForm> {
                   width: double.infinity,
                   child: Padding(
                     padding:
-                        const EdgeInsetsDirectional.only(start: 16, end: 16),
+                        const EdgeInsetsDirectional.only(start: 16, end: 16, bottom: 16),
                     child: RaisedButton(
                       padding: EdgeInsets.only(top: 16, bottom: 16),
                       child:

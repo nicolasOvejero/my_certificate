@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/widgets.dart';
-import 'package:my_certificate/utils.dart';
+import 'package:my_certificate/utils/utils.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-import 'certificate.dart';
+import '../models/certificate.dart';
 
 class PdfGeneration {
   static Future<void> createPDF(

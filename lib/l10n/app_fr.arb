@@ -130,5 +130,41 @@
   "userFormError": "Ce champ doit être rempli",
   "@userFormError": {
     "description": "Error message for user form"
+  },
+  "workTitle": "Travail",
+  "@workTitle": {
+    "description": "Card title for work type"
+  },
+  "shoppingTitle": "Culturel ou achats",
+  "@shoppingTitle": {
+    "description": "Card title for shopping type"
+  },
+  "medicalTitle": "Consultations/examens/soins",
+  "@medicalTitle": {
+    "description": "Card title for medical type"
+  },
+  "familyTitle": "Déplacements motif impérieux",
+  "@familyTitle": {
+    "description": "Card title for family type"
+  },
+  "handicapTitle": "Handicap et accompagnant",
+  "@handicapTitle": {
+    "description": "Card title for handicap type"
+  },
+  "sportTitle": "Activité physique/Animaux",
+  "@sportTitle": {
+    "description": "Card title for sport type"
+  },
+  "administrativeTitle": "Convocation judiciaire/administrative",
+  "@administrativeTitle": {
+    "description": "Card title for administrative type"
+  },
+  "generalInterestTitle": "Missions d'intérêt général",
+  "@generalInterestTitle": {
+    "description": "Card title for general interest type"
+  },
+  "schoolTitle": "Déplacement pour enfants",
+  "@schoolTitle": {
+    "description": "Card title for school type"
   }
 }

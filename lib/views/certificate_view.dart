@@ -2,11 +2,11 @@ import 'package:barcode/barcode.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_certificate/certificate.dart';
-import 'package:my_certificate/pdf_generation.dart';
-import 'package:my_certificate/qrcode_dialog_view.dart';
-import 'package:my_certificate/storage_service.dart';
-import 'package:my_certificate/utils.dart';
+import 'package:my_certificate/models/certificate.dart';
+import 'package:my_certificate/services/storage_service.dart';
+import 'package:my_certificate/utils/pdf_generation.dart';
+import 'package:my_certificate/utils/utils.dart';
+import 'package:my_certificate/views/qrcode_dialog_view.dart';
 
 class CertificateView extends StatefulWidget {
   final Function callbackTabBar;
@@ -197,7 +197,7 @@ class CertificateViewState extends State<CertificateView> {
                     child: _getMovementActivityIcon(),
                   ),
                   Text(
-                    Utils.mapMovementTypeToFrenchHuman(certificate.type),
+                    Utils.mapMovementTypeToFrenchHuman(certificate.type, context),
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                 ],
@@ -316,7 +316,8 @@ class CertificateViewState extends State<CertificateView> {
     final DateTime creationLimit =
         certificate.creationDateTime.add(new Duration(hours: 3));
     final int remainingHours = creationLimit.difference(DateTime.now()).inHours;
-    final int remainingMinutes = creationLimit.difference(DateTime.now()).inMinutes % 60;
+    final int remainingMinutes =
+        creationLimit.difference(DateTime.now()).inMinutes % 60;
 
     if (certificate.type == MovementType.sport) {
       if (DateTime.now().isAfter(creationLimit)) {
@@ -349,9 +350,9 @@ class CertificateViewState extends State<CertificateView> {
               child: Icon(Icons.timelapse_outlined, size: 24),
             ),
             Text(
-              creationLimit.difference(DateTime.now()).inHours >= 1 ?
-              "Il vous reste $remainingHours heures et $remainingMinutes minutes"
-              : "Il vous reste $remainingMinutes minutes",
+              creationLimit.difference(DateTime.now()).inHours >= 1
+                  ? "Il vous reste $remainingHours heures et $remainingMinutes minutes"
+                  : "Il vous reste $remainingMinutes minutes",
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
           ],

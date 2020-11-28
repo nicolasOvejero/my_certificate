@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:my_certificate/certificate.dart';
+import 'package:my_certificate/models/certificate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageService {

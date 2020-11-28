@@ -5,9 +5,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong/latlong.dart';
-import 'package:my_certificate/certificate.dart';
-import 'package:my_certificate/location_service.dart';
-import 'package:my_certificate/storage_service.dart';
+import 'package:my_certificate/models/certificate.dart';
+import 'package:my_certificate/services/location_service.dart';
+import 'package:my_certificate/services/storage_service.dart';
 
 class MapPage extends StatefulWidget {
   MapPage(this.certificate);
