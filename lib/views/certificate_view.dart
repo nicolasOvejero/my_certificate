@@ -182,35 +182,37 @@ class CertificateViewState extends State<CertificateView> {
         child: Padding(
           padding: EdgeInsets.all(12),
           child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
-                  Widget>[
-            Text(
-              AppLocalizations.of(context).certificateMovement,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 8),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(right: 8),
-                    child: _getMovementActivityIcon(),
+          Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  AppLocalizations.of(context).certificateMovement,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 8),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(right: 8),
+                        child: _getMovementActivityIcon(),
+                      ),
+                      Text(
+                        Utils.mapMovementTypeToFrenchHuman(certificate.type, context),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w500),
+                      ),
+                    ],
                   ),
-                  Text(
-                    Utils.mapMovementTypeToFrenchHuman(certificate.type, context),
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 8),
+                  child: Text(
+                    Utils.mapMovementTypeToFrenchText(certificate.type, context),
+                    style: TextStyle(fontSize: 12, fontStyle: FontStyle.italic),
                   ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 8),
-              child: Text(
-                Utils.mapMovementTypeToFrenchText(certificate.type, context),
-                style: TextStyle(fontSize: 12, fontStyle: FontStyle.italic),
-              ),
-            ),
-          ]),
+                ),
+              ]),
         ),
       ),
     );
@@ -224,65 +226,70 @@ class CertificateViewState extends State<CertificateView> {
         child: Padding(
           padding: EdgeInsets.all(12),
           child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
-                  Widget>[
-            Text(
-              AppLocalizations.of(context).certificateDateDocuments,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 8),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(right: 8),
-                    child: Icon(Icons.access_time_outlined, size: 24),
+          Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  AppLocalizations.of(context).certificateDateDocuments,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 8),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(right: 8),
+                        child: Icon(Icons.access_time_outlined, size: 24),
+                      ),
+                      Text(
+                        '${Utils.dateFormat.format(certificate.creationDateTime)} à '
+                            '${Utils.hourFormat.format(certificate.creationDateTime)}',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w500),
+                      ),
+                    ],
                   ),
-                  Text(
-                    '${Utils.dateFormat.format(certificate.creationDateTime)} à '
-                    '${Utils.hourFormat.format(certificate.creationDateTime)}',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                  ),
-                ],
-              ),
-            ),
-            _checkIfSport(),
-            Padding(
-              padding: EdgeInsets.only(top: 8),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.all(4),
-                      child: RaisedButton.icon(
-                        onPressed: () => {_generateQrcode()},
-                        icon: Icon(Icons.qr_code_outlined, size: 22),
-                        label: Text(
-                          AppLocalizations.of(context).certificateQrcode,
-                          style: TextStyle(fontSize: 13),
+                ),
+                _checkIfSport(),
+                Padding(
+                  padding: EdgeInsets.only(top: 8),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.all(4),
+                          child: RaisedButton.icon(
+                            onPressed: () => {_generateQrcode()},
+                            icon: Icon(Icons.qr_code_outlined, size: 22),
+                            label: Text(
+                              AppLocalizations.of(context).certificateQrcode,
+                              style: TextStyle(fontSize: 13),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.all(4),
-                      child: RaisedButton.icon(
-                        onPressed: () async => {
-                          await PdfGeneration.createPDF(certificate, context)
-                        },
-                        icon: Icon(Icons.picture_as_pdf_outlined, size: 22),
-                        label: Text(
-                          AppLocalizations.of(context).certificatePdf,
-                          style: TextStyle(fontSize: 13),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.all(4),
+                          child: RaisedButton.icon(
+                            onPressed: () async =>
+                            {
+                              await PdfGeneration.createPDF(certificate, context)
+                            },
+                            icon: Icon(Icons.picture_as_pdf_outlined, size: 22),
+                            label: Text(
+                              AppLocalizations
+                                  .of(context)
+                                  .certificatePdf,
+                              style: TextStyle(fontSize: 13),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-          ]),
+                ),
+              ]),
         ),
       ),
     );
@@ -316,8 +323,7 @@ class CertificateViewState extends State<CertificateView> {
     final DateTime creationLimit =
         certificate.creationDateTime.add(new Duration(hours: 3));
     final int remainingHours = creationLimit.difference(DateTime.now()).inHours;
-    final int remainingMinutes =
-        creationLimit.difference(DateTime.now()).inMinutes % 60;
+    final int remainingMinutes = creationLimit.difference(DateTime.now()).inMinutes % 60;
 
     if (certificate.type == MovementType.sport) {
       if (DateTime.now().isAfter(creationLimit)) {

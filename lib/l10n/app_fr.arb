@@ -166,5 +166,9 @@
   "schoolTitle": "Déplacement pour enfants",
   "@schoolTitle": {
     "description": "Card title for school type"
+  },
+  "creditLibTitle": "Les bibliothèques utilisées",
+  "@creditLibTitle": {
+    "description": "Title for the libraries part in credit page"
   }
 }

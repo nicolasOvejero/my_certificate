@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_certificate/credit_page.dart';
 import 'package:my_certificate/models/certificate.dart';
 import 'package:my_certificate/views/certificate_view.dart';
 import 'package:my_certificate/map_page.dart';
@@ -72,7 +73,16 @@ class _TabBarController extends State<TabBarController>
                         MaterialPageRoute(builder: (context) => MapPage(certificate)),
                       );
                     },
-                  ) : Container()
+                  ) : Container(),
+                  IconButton(
+                    icon: Icon(Icons.contact_support_outlined),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CreditPage()),
+                      );
+                    },
+                  )
                 ],
               ),
               body: TabBarView(
