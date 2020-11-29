@@ -170,5 +170,41 @@
   "creditLibTitle": "Les bibliothèques utilisées",
   "@creditLibTitle": {
     "description": "Title for the libraries part in credit page"
+  },
+  "rgpdTitle": "RGPD",
+  "@rgpdTitle": {
+    "description": "Title for the rgpd part in credit page"
+  },
+  "collectInformation": "Aucune information n'est collectée à des fins de profit, toutes informations demandées sont stockées sur le téléphone de l'utilisateur",
+  "@collectInformation": {
+    "description": "Text for no collecting information"
+  },
+  "advertisingInformation": "L'application est gratuite et ne contient aucune pub",
+  "@advertisingInformation": {
+    "description": "Text for no advertising information"
+  },
+  "helpInformation": "L'application est concue pour aider les utilisateurs et simplifier la génération de l'attestation obligatoire en France",
+  "@helpInformation": {
+    "description": "Text for help information"
+  },
+  "httpInformation": "Le seul appel via internet fait est celui pour transformer des coordonnées (longitude/latitude) en adresse via le service Nominatim",
+  "@httpInformation": {
+    "description": "Text for http information"
+  },
+  "contactTitle": "Contact",
+  "@contactTitle": {
+    "description": "Title for the contact part in credit page"
+  },
+  "developBy": "Application developpée par ",
+  "@developBy": {
+    "description": "Text for credit page followed by developer name"
+  },
+  "email": "Email: ",
+  "@email": {
+    "description": "Label for email followed by the developer email"
+  },
+  "github": "Github (source libre) : ",
+  "@github": {
+    "description": "Label for github followed by the project github link"
   }
 }

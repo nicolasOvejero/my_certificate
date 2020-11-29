@@ -51,6 +51,10 @@ class _CreditPage extends State<CreditPage> {
         "https://pub.dev/packages/shared_preferences (flutter)"),
     LibModel("intl", "Utilisée pour les variables de langue",
         "https://pub.dev/packages/intl (dart)"),
+    LibModel(
+        "nominatim",
+        "Utilisée pour avoir une adresse en fonction de la long et lat",
+        "https://nominatim.org/ (nominatim)"),
   ];
 
   @override
@@ -61,7 +65,12 @@ class _CreditPage extends State<CreditPage> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: <Widget>[_buildLibView(context)],
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            _buildLibView(context),
+            _buildData(context),
+            _buildContact()
+          ],
         ),
       ),
     );
@@ -106,6 +115,122 @@ class _CreditPage extends State<CreditPage> {
       padding: EdgeInsets.all(16),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start, children: libView),
+    );
+  }
+
+  Widget _buildData(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(bottom: 16),
+              child: Text(
+                AppLocalizations.of(context).rgpdTitle,
+                style: TextStyle(
+                    color: Theme.of(context).accentColor,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w900),
+              ),
+            ),
+            Text(
+              AppLocalizations.of(context).collectInformation,
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 4),
+              child: Text(
+                AppLocalizations.of(context).advertisingInformation,
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 4),
+              child: Text(
+                AppLocalizations.of(context).helpInformation,
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 4),
+              child: Text(
+                AppLocalizations.of(context).httpInformation,
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+              ),
+            ),
+          ]),
+    );
+  }
+
+  Widget _buildContact() {
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(bottom: 16),
+              child: Text(
+                AppLocalizations.of(context).contactTitle,
+                style: TextStyle(
+                    color: Theme.of(context).accentColor,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w900),
+              ),
+            ),
+            RichText(
+              text: TextSpan(
+                text: AppLocalizations.of(context).developBy,
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: 'Nicolas Ovejero',
+                    style: TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 4),
+              child: SelectableText.rich(
+                TextSpan(
+                  text: AppLocalizations.of(context).developBy,
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: 'nicolas.ovejero.ovejero@neo9.fr',
+                      style: TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 4),
+              child: SelectableText.rich(
+                TextSpan(
+                  text: AppLocalizations.of(context).github,
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: 'https://github.com/nicolasOvejero/my_certificate',
+                      style: TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ]),
     );
   }
 }

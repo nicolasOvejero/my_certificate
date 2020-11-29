@@ -27,6 +27,8 @@ class MyApp extends StatelessWidget {
           ),
           toggleableActiveColor:  Utils.hexToColor('#000191'),
           visualDensity: VisualDensity.adaptivePlatformDensity,
+          textSelectionColor: Utils.hexToColor('#000191').withOpacity(0.4),
+          textSelectionHandleColor: Utils.hexToColor('#000191'),
         ),
 /*
         darkTheme: ThemeData(
@@ -42,6 +44,8 @@ class MyApp extends StatelessWidget {
           ),
           toggleableActiveColor:  Utils.hexToColor('#000191'),
           visualDensity: VisualDensity.adaptivePlatformDensity,
+          textSelectionColor: Utils.hexToColor('#000048').withOpacity(0.8),
+          textSelectionHandleColor: Utils.hexToColor('#000048'),
         ),
 */
         home: TabBarController(title: 'Mon attestation'));
