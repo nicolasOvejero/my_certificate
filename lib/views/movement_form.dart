@@ -56,20 +56,6 @@ class MovementFormState extends State<MovementForm> {
           child: Divider(thickness: 2)
       ),
       RadioListTile(
-        title: Text(AppLocalizations.of(context).movementFormShoppingExp),
-        value: MovementType.shopping,
-        groupValue: certificate.type,
-        onChanged: (MovementType value) {
-          setState(() {
-            certificate.type = value;
-          });
-        },
-      ),
-      Padding(
-          padding: EdgeInsets.only(left: 16, right: 16),
-          child: Divider(thickness: 2)
-      ),
-      RadioListTile(
         title: Text(AppLocalizations.of(context).movementFormMedicalExp),
         value: MovementType.medical,
         groupValue: certificate.type,
@@ -112,20 +98,6 @@ class MovementFormState extends State<MovementForm> {
           child: Divider(thickness: 2)
       ),
       RadioListTile(
-        title: Text(AppLocalizations.of(context).movementFormSportExp),
-        value: MovementType.sport,
-        groupValue: certificate.type,
-        onChanged: (MovementType value) {
-          setState(() {
-            certificate.type = value;
-          });
-        },
-      ),
-      Padding(
-          padding: EdgeInsets.only(left: 16, right: 16),
-          child: Divider(thickness: 2)
-      ),
-      RadioListTile(
         title: Text(AppLocalizations.of(context).movementFormAdministrativeExp),
         value: MovementType.administrative,
         groupValue: certificate.type,
@@ -156,8 +128,24 @@ class MovementFormState extends State<MovementForm> {
       Padding(
           padding: EdgeInsets.only(bottom: 16),
           child: RadioListTile(
-            title: Text(AppLocalizations.of(context).movementFormSchoolExp),
-            value: MovementType.school,
+            title: Text(AppLocalizations.of(context).movementFormTransitExp),
+            value: MovementType.transit,
+            groupValue: certificate.type,
+            onChanged: (MovementType value) {
+              setState(() {
+                certificate.type = value;
+              });
+            },
+          )),
+      Padding(
+          padding: EdgeInsets.only(left: 16, right: 16),
+          child: Divider(thickness: 2)
+      ),
+      Padding(
+          padding: EdgeInsets.only(bottom: 16),
+          child: RadioListTile(
+            title: Text(AppLocalizations.of(context).movementFormAnimalExp),
+            value: MovementType.animals,
             groupValue: certificate.type,
             onChanged: (MovementType value) {
               setState(() {

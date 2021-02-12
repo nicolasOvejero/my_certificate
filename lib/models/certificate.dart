@@ -7,7 +7,9 @@ enum MovementType {
   sport,
   administrative,
   general_interest,
-  school
+  school,
+  transit,
+  animals
 }
 
 class Address {

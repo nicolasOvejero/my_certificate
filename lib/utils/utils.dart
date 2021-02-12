@@ -54,6 +54,10 @@ class Utils {
         return "missions";
       case MovementType.school:
         return "enfants";
+      case MovementType.transit:
+        return "transits";
+      case MovementType.animals:
+        return "animaux";
     }
     return "";
   }
@@ -78,6 +82,10 @@ class Utils {
         return AppLocalizations.of(context).generalInterestTitle;
       case MovementType.school:
         return AppLocalizations.of(context).schoolTitle;
+      case MovementType.transit:
+        return AppLocalizations.of(context).transitTitle;
+      case MovementType.animals:
+        return AppLocalizations.of(context).animalTitle;
     }
     return "";
   }
@@ -102,6 +110,10 @@ class Utils {
         return AppLocalizations.of(context).movementFormGeneralInterestExp;
       case MovementType.school:
         return AppLocalizations.of(context).movementFormSchoolExp;
+      case MovementType.transit:
+        return AppLocalizations.of(context).movementFormTransitExp;
+      case MovementType.animals:
+        return AppLocalizations.of(context).movementFormAnimalExp;
     }
     return "";
   }

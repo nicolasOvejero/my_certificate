@@ -47,7 +47,11 @@
   "@certificateTimeOut": {
     "description": "Message for time out case"
   },
-  "movementFormWorkExp": "Déplacements entre le domicile et le lieu d'exercice de l'activité professionnelle ou un établissement d'enseignement ou de formation ; déplacements professionnels ne pouvant être différés ; déplacements pour un concours ou un examen ;",
+  "curfew": "Le couvre feu en vigeur est de 18h à 6h",
+  "@curfew": {
+    "description": "Message to notify the user if the curfew is activate"
+  },
+  "movementFormWorkExp": "Déplacements entre le domicile et le lieu d'exercice de l'activité professionnelle ou le lieu d'enseignement et de formation, déplacements professionnels ne pouvant être différés",
   "@movementFormWorkExp": {
     "description": "Label for work movement type"
   },
@@ -55,15 +59,15 @@
   "@movementFormShoppingExp": {
     "description": "Label for shopping movement type"
   },
-  "movementFormMedicalExp": "Consultations, examens et soins ne pouvant être assurés à distance et achats de médicaments ;",
+  "movementFormMedicalExp": "Déplacements pour des consultations, examens, actes de prévention (dont vaccination) et soins ne pouvant être assurés à distance et ne pouvant être différés ou pour l'achat de produits de santé",
   "@movementFormMedicalExp": {
     "description": "Label for work movement type"
   },
-  "movementFormFamilyExp": "Déplacements pour motif familial impérieux, pour l'assistance aux personnes vulnérables et précaires ou la garde d'enfants ;",
+  "movementFormFamilyExp": "Déplacements pour motif familial impérieux, pour l'assistance aux personnes vulnérables ou précaires ou pour la garde d'enfants",
   "@movementFormFamilyExp": {
     "description": "Label for famlily movement type"
   },
-  "movementFormHandicapExp": "Déplacements des personnes en situation de handicap et leur accompagnant ;",
+  "movementFormHandicapExp": "Déplacements des personnes en situation de handicap et de leur accompagnant",
   "@movementFormHandicapExp": {
     "description": "Label for handicap movement type"
   },
@@ -71,13 +75,21 @@
   "@movementFormSportExp": {
     "description": "Label for sport movement type"
   },
-  "movementFormAdministrativeExp": "Convocations judiciaires ou administratives et déplacements pour se rendre dans un service public ;",
+  "movementFormAdministrativeExp": "Déplacements pour répondre à une convocation judiciaire ou administrative",
   "@movementFormAdministrativeExp": {
     "description": "Label for administrative movement type"
   },
-  "movementFormGeneralInterestExp": "Participation à des missions d'intérêt général sur demande de l'autorité administrative ;",
+  "movementFormGeneralInterestExp": "Déplacements pour participer à des missions d'intérêt général sur demande de l'autorité administrative",
   "@movementFormGeneralInterestExp": {
     "description": "Label for general interest movement type"
+  },
+  "movementFormTransitExp": "Déplacements liés à des transits ferroviaires, aériens ou en bus pour des déplacements de longues distances",
+  "@movementFormTransitExp": {
+    "description": "Label for transit in train or bus movement type"
+  },
+  "movementFormAnimalExp": "Déplacements brefs, dans un rayon maximal d'un kilomètre autour du domicile pour les besoins des animaux de compagnie",
+  "@movementFormAnimalExp": {
+    "description": "Label for animals movement type"
   },
   "movementFormSchoolExp": "Déplacements pour chercher les enfants à l'école et à l'occasion de leurs activités périscolaires ;",
   "@movementFormSchoolExp": {
@@ -170,6 +182,14 @@
   "creditLibTitle": "Les bibliothèques utilisées",
   "@creditLibTitle": {
     "description": "Title for the libraries part in credit page"
+  },
+  "transitTitle": "Déplacement longues distance",
+  "@transitTitle": {
+    "description": "Card title for bus, train or plane transit"
+  },
+  "animalTitle": "Baldade des animaux",
+  "@animalTitle": {
+    "description": "Card title for the animal"
   },
   "rgpdTitle": "RGPD",
   "@rgpdTitle": {

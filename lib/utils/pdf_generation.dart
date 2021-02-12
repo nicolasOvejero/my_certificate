@@ -10,8 +10,7 @@ import 'package:pdf/widgets.dart' as pw;
 import '../models/certificate.dart';
 
 class PdfGeneration {
-  static Future<void> createPDF(
-      Certificate values, BuildContext context) async {
+  static Future<void> createPDF(Certificate values, BuildContext context) async {
     final pdf = PdfGeneration.generatePdf(values, context);
 
     final output = await getExternalStorageDirectory();
@@ -21,8 +20,7 @@ class PdfGeneration {
     OpenFile.open(file.path);
   }
 
-  static pw.Document generatePdf(
-      Certificate values, BuildContext buildContext) {
+  static pw.Document generatePdf(Certificate values, BuildContext buildContext) {
     final pdf = pw.Document();
 
     pdf.addPage(pw.Page(
@@ -35,6 +33,8 @@ class PdfGeneration {
             buildNote(),
             buildMovementType(values.type, buildContext),
             buildLegalInformation(values),
+            buildQrCode(values),
+            buildExtraText()
           ]);
         }));
     pdf.addPage(pw.Page(
@@ -50,26 +50,22 @@ class PdfGeneration {
   static pw.Widget buildHeader() {
     return pw.Column(children: [
       pw.Container(
-        alignment: pw.Alignment.center,
-        padding: const pw.EdgeInsets.only(bottom: 12),
-        child: pw.Text("ATTESTATION DE DÉPLACEMENT DÉROGATOIRE",
-            style: pw.TextStyle(
-              fontWeight: pw.FontWeight.bold,
-              fontSize: 14,
-            )),
-      ),
+          alignment: pw.Alignment.center,
+          padding: const pw.EdgeInsets.only(bottom: 12),
+          child: pw.Padding(
+            padding: pw.EdgeInsets.only(left: 24, right: 24),
+            child: pw.Text("ATTESTATION DE DÉPLACEMENT DÉROGATOIRE DURANT LES HORAIRES DU COUVRE-FEU",
+                style: pw.TextStyle(fontSize: 16, lineSpacing: 2), textAlign: pw.TextAlign.center),
+          )),
       pw.Container(
         alignment: pw.Alignment.center,
         padding: const pw.EdgeInsets.only(bottom: 24),
         child: pw.Text(
-            "En application du décret n°2020-1310 du 29 octobre 2020 prescrivant"
-            " les mesures générales nécessaires pour faire face à l'épidémie de covid-19"
-            " dans le cadre de l'état d'urgence sanitaire",
+            "En application de l'article 4 du décret n° 2020-1310 du 29 octobre 2020 prescrivant les mesures générales"
+            " nécessaires pour faire face à l'épidémie de COVID-19 dans le cadre de l'état d'urgence sanitaire",
             style: pw.TextStyle(
-              fontStyle: pw.FontStyle.italic,
               fontSize: 10,
-            ),
-            textAlign: pw.TextAlign.center),
+            )),
       ),
     ]);
   }
@@ -158,298 +154,165 @@ class PdfGeneration {
   }
 
   static pw.Widget buildNote() {
-    return pw.Column(children: [
-      pw.Container(
-        padding: const pw.EdgeInsets.only(bottom: 4),
-        child: pw.Text(
-            "certifie que mon déplacement est lié au motif suivant (cocher la case) autorisé par le décret "
-            "no 2020-1310 du 29 octobre 2020 prescrivant les mesures générales nécessaires pour faire face "
-            "à l'épidémie de COVID-19 dans le cadre de l'état d'urgence sanitaire :",
-            style: pw.TextStyle(
-              fontSize: 12,
-            )),
-      ),
-      pw.Container(
-        padding: const pw.EdgeInsets.only(bottom: 16),
-        child: pw.Text(
-            "Note : les personnes souhaitant bénéficier de l'une de ces exceptions "
-            "doivent se munir s'il y a lieu, lors de leurs déplacements hors de "
-            "leur domicile, d'un document leur permettant de justifier que "
-            "le déplacement considéré entre dans le champ de l'une de ces exceptions.",
-            style: pw.TextStyle(
-              fontSize: 9,
+    return pw.Padding(
+      padding: pw.EdgeInsets.only(bottom: 12),
+      child: pw.RichText(
+        text: pw.TextSpan(
+          text: "certifie que mon déplacement est lié au motif suivant (cocher la case) autorisé "
+              "en application des mesures générales nécessaires pour faire face à l'épidémie de COVID-19 "
+              "dans le cadre de l'état d'urgence sanitaire ",
+          style: pw.TextStyle(fontSize: 12),
+          children: [
+            pw.TextSpan(
+              text: '1',
+              baseline: 6,
+              style: pw.TextStyle(fontSize: 7),
             ),
-            textAlign: pw.TextAlign.justify),
+            pw.TextSpan(text: ' :'),
+          ],
+        ),
       ),
-    ]);
+    );
   }
 
   static pw.Widget buildMovementType(MovementType value, BuildContext context) {
     return pw.Column(children: [
       pw.Container(
         padding: const pw.EdgeInsets.only(bottom: 8),
-        child:
-            pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+        child: pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
           pw.Container(
               width: 12,
               height: 12,
               margin: const pw.EdgeInsets.only(right: 8, top: 1),
-              decoration: const pw.BoxDecoration(
-                  color: PdfColors.white,
-                  border: pw.BoxBorder(
-                    left: true,
-                    top: true,
-                    right: true,
-                    bottom: true,
-                  ),
-                  shape: pw.BoxShape.rectangle),
-              padding: pw.EdgeInsets.only(bottom: 13, left: 2),
-              child: value == MovementType.work ? pw.Text("X") : null),
+              padding: pw.EdgeInsets.only(bottom: 13, left: 0),
+              child: value == MovementType.work ? pw.Text("[x]") : pw.Text("[ ]")),
           pw.Flexible(
               child: pw.Column(children: [
             pw.Container(
               padding: const pw.EdgeInsets.only(bottom: 4),
-              child: pw.Text(
-                  '1. ${Utils.mapMovementTypeToFrenchText(MovementType.work, context)}',
+              child: pw.Text(Utils.mapMovementTypeToFrenchText(MovementType.work, context),
                   style: pw.TextStyle(
-                    fontSize: 10,
+                    fontSize: 12,
                   )),
             ),
-            pw.Text(
-                "Note : à utiliser par les travailleurs non-salariés, lorsqu'ils"
-                " ne peuvent disposer d'un justificatif de déplacement établi par leur employeur.",
-                style: pw.TextStyle(
-                  fontSize: 8,
-                ),
-                textAlign: pw.TextAlign.justify),
           ]))
         ]),
       ),
       pw.Container(
         padding: const pw.EdgeInsets.only(bottom: 8),
-        child:
-            pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+        child: pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
           pw.Container(
               width: 12,
               height: 12,
               margin: const pw.EdgeInsets.only(right: 8, top: 1),
-              decoration: const pw.BoxDecoration(
-                  color: PdfColors.white,
-                  border: pw.BoxBorder(
-                    left: true,
-                    top: true,
-                    right: true,
-                    bottom: true,
-                  ),
-                  shape: pw.BoxShape.rectangle),
-              padding: pw.EdgeInsets.only(bottom: 13, left: 2),
-              child: value == MovementType.shopping ? pw.Text("X") : null),
+              padding: pw.EdgeInsets.only(bottom: 13, left: 0),
+              child: value == MovementType.medical ? pw.Text("[x]") : pw.Text("[ ]")),
           pw.Flexible(
-            child: pw.Container(
-              padding: const pw.EdgeInsets.only(bottom: 4),
-              child: pw.Text(
-                  '2. ${Utils.mapMovementTypeToFrenchText(MovementType.shopping, context)}',
-                  style: pw.TextStyle(
-                    fontSize: 10,
-                  )),
-            ),
-          )
-        ]),
-      ),
-      pw.Container(
-        padding: const pw.EdgeInsets.only(bottom: 8),
-        child:
-            pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
-          pw.Container(
-              width: 12,
-              height: 12,
-              margin: const pw.EdgeInsets.only(right: 8, top: 1),
-              decoration: const pw.BoxDecoration(
-                  color: PdfColors.white,
-                  border: pw.BoxBorder(
-                    left: true,
-                    top: true,
-                    right: true,
-                    bottom: true,
-                  ),
-                  shape: pw.BoxShape.rectangle),
-              padding: pw.EdgeInsets.only(bottom: 13, left: 2),
-              child: value == MovementType.medical ? pw.Text("X") : null),
-          pw.Flexible(
-            child: pw.Text(
-                '3. ${Utils.mapMovementTypeToFrenchText(MovementType.medical, context)}',
+            child: pw.Text(Utils.mapMovementTypeToFrenchText(MovementType.medical, context),
                 style: pw.TextStyle(
-                  fontSize: 10,
+                  fontSize: 12,
                 )),
           ),
         ]),
       ),
       pw.Container(
         padding: const pw.EdgeInsets.only(bottom: 8),
-        child:
-            pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+        child: pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
           pw.Container(
               width: 12,
               height: 12,
               margin: const pw.EdgeInsets.only(right: 8, top: 1),
-              decoration: const pw.BoxDecoration(
-                  color: PdfColors.white,
-                  border: pw.BoxBorder(
-                    left: true,
-                    top: true,
-                    right: true,
-                    bottom: true,
-                  ),
-                  shape: pw.BoxShape.rectangle),
-              padding: pw.EdgeInsets.only(bottom: 13, left: 2),
-              child: value == MovementType.family ? pw.Text("X") : null),
+              padding: pw.EdgeInsets.only(bottom: 13, left: 0),
+              child: value == MovementType.family ? pw.Text("[x]") : pw.Text("[ ]")),
           pw.Flexible(
-            child: pw.Text(
-                '4. ${Utils.mapMovementTypeToFrenchText(MovementType.family, context)}',
+            child: pw.Text(Utils.mapMovementTypeToFrenchText(MovementType.family, context),
                 style: pw.TextStyle(
-                  fontSize: 10,
+                  fontSize: 12,
                 )),
           ),
         ]),
       ),
       pw.Container(
         padding: const pw.EdgeInsets.only(bottom: 8),
-        child:
-            pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+        child: pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
           pw.Container(
               width: 12,
               height: 12,
               margin: const pw.EdgeInsets.only(right: 8, top: 1),
-              decoration: const pw.BoxDecoration(
-                  color: PdfColors.white,
-                  border: pw.BoxBorder(
-                    left: true,
-                    top: true,
-                    right: true,
-                    bottom: true,
-                  ),
-                  shape: pw.BoxShape.rectangle),
-              padding: pw.EdgeInsets.only(bottom: 13, left: 2),
-              child: value == MovementType.handicap ? pw.Text("X") : null),
+              padding: pw.EdgeInsets.only(bottom: 13, left: 0),
+              child: value == MovementType.handicap ? pw.Text("[x]") : pw.Text("[ ]")),
           pw.Flexible(
-            child: pw.Text(
-                '5. ${Utils.mapMovementTypeToFrenchText(MovementType.handicap, context)}',
+            child: pw.Text(Utils.mapMovementTypeToFrenchText(MovementType.handicap, context),
                 style: pw.TextStyle(
-                  fontSize: 10,
+                  fontSize: 12,
                 )),
           ),
         ]),
       ),
       pw.Container(
         padding: const pw.EdgeInsets.only(bottom: 8),
-        child:
-            pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+        child: pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
           pw.Container(
               width: 12,
               height: 12,
               margin: const pw.EdgeInsets.only(right: 8, top: 1),
-              decoration: const pw.BoxDecoration(
-                  color: PdfColors.white,
-                  border: pw.BoxBorder(
-                    left: true,
-                    top: true,
-                    right: true,
-                    bottom: true,
-                  ),
-                  shape: pw.BoxShape.rectangle),
-              padding: pw.EdgeInsets.only(bottom: 13, left: 2),
-              child: value == MovementType.sport ? pw.Text("X") : null),
+              padding: pw.EdgeInsets.only(bottom: 13, left: 0),
+              child: value == MovementType.administrative ? pw.Text("[x]") : pw.Text("[ ]")),
           pw.Flexible(
-            child: pw.Text(
-                '6. ${Utils.mapMovementTypeToFrenchText(MovementType.sport, context)}',
+            child: pw.Text(Utils.mapMovementTypeToFrenchText(MovementType.administrative, context),
                 style: pw.TextStyle(
-                  fontSize: 10,
+                  fontSize: 12,
                 )),
           ),
         ]),
       ),
       pw.Container(
         padding: const pw.EdgeInsets.only(bottom: 8),
-        child:
-            pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+        child: pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
           pw.Container(
               width: 12,
               height: 12,
               margin: const pw.EdgeInsets.only(right: 8, top: 1),
-              decoration: const pw.BoxDecoration(
-                  color: PdfColors.white,
-                  border: pw.BoxBorder(
-                    left: true,
-                    top: true,
-                    right: true,
-                    bottom: true,
-                  ),
-                  shape: pw.BoxShape.rectangle),
-              padding: pw.EdgeInsets.only(bottom: 13, left: 2),
-              child:
-                  value == MovementType.administrative ? pw.Text("X") : null),
+              padding: pw.EdgeInsets.only(bottom: 13, left: 0),
+              child: value == MovementType.general_interest ? pw.Text("[x]") : pw.Text("[ ]")),
           pw.Flexible(
-            child: pw.Text(
-                '7. ${Utils.mapMovementTypeToFrenchText(MovementType.administrative, context)}',
+            child: pw.Text(Utils.mapMovementTypeToFrenchText(MovementType.general_interest, context),
                 style: pw.TextStyle(
-                  fontSize: 10,
+                  fontSize: 12,
                 )),
           ),
         ]),
       ),
       pw.Container(
         padding: const pw.EdgeInsets.only(bottom: 8),
-        child:
-            pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+        child: pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
           pw.Container(
               width: 12,
               height: 12,
               margin: const pw.EdgeInsets.only(right: 8, top: 1),
-              decoration: const pw.BoxDecoration(
-                  color: PdfColors.white,
-                  border: pw.BoxBorder(
-                    left: true,
-                    top: true,
-                    right: true,
-                    bottom: true,
-                  ),
-                  shape: pw.BoxShape.rectangle),
-              padding: pw.EdgeInsets.only(bottom: 13, left: 2),
-              child:
-                  value == MovementType.general_interest ? pw.Text("X") : null),
+              padding: pw.EdgeInsets.only(bottom: 13, left: 0),
+              child: value == MovementType.transit ? pw.Text("[x]") : pw.Text("[ ]")),
           pw.Flexible(
-            child: pw.Text(
-                '8. ${Utils.mapMovementTypeToFrenchText(MovementType.general_interest, context)}',
+            child: pw.Text(Utils.mapMovementTypeToFrenchText(MovementType.transit, context),
                 style: pw.TextStyle(
-                  fontSize: 10,
+                  fontSize: 12,
                 )),
           ),
         ]),
       ),
       pw.Container(
-        padding: const pw.EdgeInsets.only(bottom: 96),
-        child:
-            pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+        padding: const pw.EdgeInsets.only(bottom: 16),
+        child: pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
           pw.Container(
               width: 12,
               height: 12,
               margin: const pw.EdgeInsets.only(right: 8, top: 1),
-              decoration: const pw.BoxDecoration(
-                  color: PdfColors.white,
-                  border: pw.BoxBorder(
-                    left: true,
-                    top: true,
-                    right: true,
-                    bottom: true,
-                  ),
-                  shape: pw.BoxShape.rectangle),
-              padding: pw.EdgeInsets.only(bottom: 13, left: 2),
-              child: value == MovementType.school ? pw.Text("X") : null),
+              padding: pw.EdgeInsets.only(bottom: 13, left: 0),
+              child: value == MovementType.animals ? pw.Text("[x]") : pw.Text("[ ]")),
           pw.Flexible(
-            child: pw.Text(
-                '9. ${Utils.mapMovementTypeToFrenchText(MovementType.school, context)}',
+            child: pw.Text(Utils.mapMovementTypeToFrenchText(MovementType.animals, context),
                 style: pw.TextStyle(
-                  fontSize: 10,
+                  fontSize: 12,
                 )),
           ),
         ]),
@@ -458,91 +321,105 @@ class PdfGeneration {
   }
 
   static pw.Widget buildLegalInformation(Certificate values) {
-    return pw.Column(children: [
-      pw.Row(children: [
-        pw.Column(
-            mainAxisAlignment: pw.MainAxisAlignment.end,
-            crossAxisAlignment: pw.CrossAxisAlignment.start,
-            children: [
-              pw.Container(
-                padding: const pw.EdgeInsets.only(top: 24, bottom: 4),
-                child: pw.Row(children: [
-                  pw.Container(
-                    padding: const pw.EdgeInsets.only(right: 4),
-                    child: pw.Text(
-                      "Fait à :",
-                      style: pw.TextStyle(
-                        fontSize: 12,
-                      ),
-                    ),
-                  ),
-                  pw.Text(
-                    values.address.city,
-                    style: pw.TextStyle(
-                      fontSize: 12,
-                    ),
-                  ),
-                ]),
-              ),
-              pw.Container(
-                padding: const pw.EdgeInsets.only(bottom: 4),
-                child: pw.Row(
-                    mainAxisAlignment: pw.MainAxisAlignment.start,
-                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                    children: [
-                      pw.Container(
-                        padding: const pw.EdgeInsets.only(right: 4),
-                        child: pw.Text(
-                          "Le :",
-                          style: pw.TextStyle(
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                      pw.Container(
-                        padding: const pw.EdgeInsets.only(right: 16),
-                        child: pw.Text(
-                          Utils.dateFormat.format(values.creationDateTime),
-                          style: pw.TextStyle(
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                      pw.Container(
-                        padding: const pw.EdgeInsets.only(right: 4),
-                        child: pw.Text(
-                          "à :",
-                          style: pw.TextStyle(
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                      pw.Text(
-                        Utils.hourFormat.format(values.creationDateTime),
-                        style: pw.TextStyle(
-                          fontSize: 12,
-                        ),
-                      ),
-                    ]),
-              ),
-              pw.Text(
-                "(Date et heure de début de sortie à mentionner obligatoirement)",
+    return pw.Row(children: [
+      pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+        pw.Container(
+          padding: const pw.EdgeInsets.only(bottom: 4),
+          child: pw.Row(children: [
+            pw.Container(
+              padding: const pw.EdgeInsets.only(right: 4),
+              child: pw.Text(
+                "Fait à :",
                 style: pw.TextStyle(
                   fontSize: 12,
                 ),
               ),
-            ]
+            ),
+            pw.Text(
+              values.address.city,
+              style: pw.TextStyle(
+                fontSize: 12,
+              ),
+            ),
+          ]),
         ),
         pw.Container(
-          padding: const pw.EdgeInsets.only(left: 56),
-          child: generateQrcode(values),
+          padding: const pw.EdgeInsets.only(bottom: 4),
+          child: pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.start,
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: [
+                pw.Container(
+                  padding: const pw.EdgeInsets.only(right: 4),
+                  child: pw.Text(
+                    "Le :",
+                    style: pw.TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                pw.Container(
+                  padding: const pw.EdgeInsets.only(right: 48),
+                  child: pw.Text(
+                    Utils.dateFormat.format(values.creationDateTime),
+                    style: pw.TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                pw.Container(
+                  padding: const pw.EdgeInsets.only(right: 4),
+                  child: pw.Text(
+                    "à :",
+                    style: pw.TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                pw.Text(
+                  Utils.hourFormat.format(values.creationDateTime),
+                  style: pw.TextStyle(
+                    fontSize: 12,
+                  ),
+                ),
+              ]),
         ),
-      ])
+        pw.Text(
+          "(Date et heure de début de sortie à mentionner obligatoirement)",
+          style: pw.TextStyle(
+            fontSize: 12,
+          ),
+        ),
+      ]),
     ]);
   }
 
-  static pw.BarcodeWidget generateQrcode(Certificate values,
-      {double height = 90, double width = 90}) {
+  static pw.Widget buildQrCode(Certificate values) {
+    return pw.Padding(
+        padding: pw.EdgeInsets.only(top: 16, bottom: 16),
+        child: pw.Container(padding: const pw.EdgeInsets.only(left: 400), child: generateQrcode(values)));
+  }
+
+  static pw.Widget buildExtraText() {
+    return pw.Row(mainAxisSize: pw.MainAxisSize.max, children: [
+      pw.Padding(
+        padding: pw.EdgeInsets.only(right: 16, bottom: 30),
+        child: pw.Align(
+          alignment: pw.Alignment.topLeft,
+          child: pw.Text('1', style: pw.TextStyle(fontSize: 7)),
+        ),
+      ),
+      pw.Flexible(
+          child: pw.Text(
+        "Les personnes souhaitant bénéficier de l'une de ces exceptions doivent se munir s'il y a lieu, "
+        "lors de leurs déplacements hors de leur domicile, d'un document leur permettant de justifier "
+        "que le déplacement considéré entre dans le champ de l'une de ces exceptions",
+        style: pw.TextStyle(fontSize: 10),
+      ))
+    ]);
+  }
+
+  static pw.BarcodeWidget generateQrcode(Certificate values, {double height = 90, double width = 90}) {
     return pw.BarcodeWidget(
       width: width,
       data: generateValuesFormQrcode(values),
